@@ -17,7 +17,7 @@ namespace Domotica
             services.AddAuthentication("CookieAuth")
                 .AddCookie("CookieAuth", config =>
                 {
-                    config.Cookie.Name = "Grandmas.Cookie  ";
+                    config.Cookie.Name = "Grandmas.Cookie";
                     config.LoginPath = "/Home/Authenticate";
                 });
         
@@ -35,7 +35,7 @@ namespace Domotica
             
             app.UseRouting();
 
-            //who are you
+            //who are you?
             app.UseAuthentication();
 
             //are you allowed?
