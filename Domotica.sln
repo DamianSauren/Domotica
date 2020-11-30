@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DomoticaDB", "DomoticaDB\DomoticaDB.sqlproj", "{0D0B244B-AFEA-4F9C-90F3-64AFEDDFE070}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domotica", "Domotica\Domotica.csproj", "{D6F8D65F-2D7A-4C55-AF56-372FC154607E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domotica", "Domotica\Domotica.csproj", "{24BC1C92-6BF8-4BDF-A9B4-380EA5975557}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,10 @@ Global
 		{0D0B244B-AFEA-4F9C-90F3-64AFEDDFE070}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D0B244B-AFEA-4F9C-90F3-64AFEDDFE070}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D0B244B-AFEA-4F9C-90F3-64AFEDDFE070}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{D6F8D65F-2D7A-4C55-AF56-372FC154607E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6F8D65F-2D7A-4C55-AF56-372FC154607E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6F8D65F-2D7A-4C55-AF56-372FC154607E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6F8D65F-2D7A-4C55-AF56-372FC154607E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24BC1C92-6BF8-4BDF-A9B4-380EA5975557}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24BC1C92-6BF8-4BDF-A9B4-380EA5975557}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24BC1C92-6BF8-4BDF-A9B4-380EA5975557}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24BC1C92-6BF8-4BDF-A9B4-380EA5975557}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
