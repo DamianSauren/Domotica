@@ -30,7 +30,17 @@ namespace Domotica.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
+
+        public IActionResult OurProducts()
+        {
+            return View();
+        }
+
+        public IActionResult Contact()
         {
             return View();
         }
