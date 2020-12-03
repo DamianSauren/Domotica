@@ -24,10 +24,9 @@ namespace Domotica.Migrations
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
-                {
+                {   
+                    //Only actively using UserName, NormalizedUserName, Email, NormalizedEmail, PasswordHash
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(100)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(100)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
