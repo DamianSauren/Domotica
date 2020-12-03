@@ -10,12 +10,8 @@ namespace Domotica.Areas.Identity.Data
     // Add profile data for application users by adding properties to the DomoticaUser class
     public class DomoticaUser : IdentityUser
     {
-        [PersonalData]
-        [Column(TypeName="nvarchar(100)")]
-        public string FirstName { get; set; }
-
-        [PersonalData]
-        [Column(TypeName = "nvarchar(100)")]
-        public string LastName { get; set; }
+        //[PersonalData]
+        //[Column(TypeName="nvarchar(100)")]
+        //public string Username { get; set; }
     }
 }

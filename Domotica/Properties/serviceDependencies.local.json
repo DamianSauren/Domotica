@@ -1,8 +1,13 @@
 {
   "dependencies": {
+    "secrets1": {
+      "type": "secrets.user"
+    },
     "mssql1": {
-      "type": "mssql.local",
-      "connectionId": "DomoticaContextConnection"
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/profdomo/databases/Domotica_DB",
+      "type": "mssql.azure",
+      "connectionId": "DomoticaContextConnection",
+      "secretStore": "LocalSecretsFile"
     }
   }
 }
