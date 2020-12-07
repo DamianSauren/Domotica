@@ -1,18 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Domotica.Models
 {
     public class Device
     {
-        public String DeviceID { get; set; }
-        public String DeviceName { get; set; }
-        public object DeviceProperties { get; set; }
+        public Device()
+        {
+            DeviceProperties = DeviceCategory switch
+            {
+                DeviceCategory.Dht => (object) new Dht(),
+                DeviceCategory.MotionSensor => new MotionSensor(),
+                DeviceCategory.Light => new Light(),
+                _ => throw new ArgumentOutOfRangeException(nameof(DeviceCategory), DeviceCategory, null)
+            };
+        }
+
+        public string DeviceId { get; set; }
+        public string DeviceName { get; set; }
         public DeviceCategory DeviceCategory { get; set; }
+        public object DeviceProperties { get; set; }
         
-        public class DHT
+        public class Dht
         {
 
         }

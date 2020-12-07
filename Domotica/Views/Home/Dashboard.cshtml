@@ -1,7 +1,30 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Dashboard";
+    @model Device
 }
 
 <h1>Dashboard</h1>
+
+
+@foreach (Device device in ViewBag.Devices)
+{
+    <p>
+        @device.DeviceId
+        @device.DeviceName
+        @switch (device.DeviceCategory) {
+            case DeviceCategory.Dht:
+                <div>Temp</div>
+                break;
+            case DeviceCategory.MotionSensor:
+                <div>Motion</div>
+                break;
+            case DeviceCategory.Light:
+                <div>Light</div>
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+    </p>
+}
+
 
