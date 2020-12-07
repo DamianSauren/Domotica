@@ -48,7 +48,7 @@ namespace Domotica.Sampling
                 var filePath = Path.Combine(folder, $"{prefix}_{timestamp:dd-MM-yy-HH-mm}.csv");
                 // Allow appending within the same minute.
                 streamWriter = new StreamWriter(File.Open(filePath, FileMode.Append, FileAccess.Write, FileShare.Read));
-                streamWriter.WriteLine("time,speed,count");
+                streamWriter.WriteLine("time,temperature");
                 startNew = false;
             }
             await streamWriter.WriteLineAsync($"{timestamp:o},{temperature}");
