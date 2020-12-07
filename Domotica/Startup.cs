@@ -25,7 +25,6 @@ namespace Domotica
             var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                                     "rower");
 
-            services.AddSingleton<ISampleWriter>(svc => new SampleWriter(folderPath, "samples"));
             services.AddSingleton<IArduinoState, ArduinoState>();
             
             services.AddControllersWithViews();

@@ -7,9 +7,8 @@ namespace Domotica.Sampling
 {
     public interface IArduinoState
     {
-        DateTime LastSample { get; }
         float Temperature { get; }
 
-        void UpdateArduinoState(uint sensorMilliseconds, float temperature);
+        void UpdateArduinoState(float temperature);
     }
 }
