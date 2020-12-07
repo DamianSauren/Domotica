@@ -22,9 +22,6 @@ namespace Domotica
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                                    "rower");
-
             services.AddSingleton<IArduinoState, ArduinoState>();
             
             services.AddControllersWithViews();
