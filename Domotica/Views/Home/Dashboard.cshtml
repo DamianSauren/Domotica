@@ -1,12 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
-    @model Device
+    @model DeviceModel
 }
 
 <h1>Dashboard</h1>
 
 
-@foreach (Device device in ViewBag.Devices)
+@foreach (DeviceModel device in ViewBag.Devices)
 {
     <p>
         @device.DeviceId

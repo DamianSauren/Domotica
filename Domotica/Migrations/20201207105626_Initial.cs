@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Domotica.Migrations
 {
-    public partial class InitionCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,8 +24,7 @@ namespace Domotica.Migrations
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
-                {   
-                    //Only actively using UserName, NormalizedUserName, Email, NormalizedEmail, PasswordHash
+                {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -45,6 +44,20 @@ namespace Domotica.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Device",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    DeviceName = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    DeviceCategory = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(255)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Device", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,6 +222,9 @@ namespace Domotica.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Device");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

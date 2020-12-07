@@ -2,9 +2,9 @@
 
 namespace Domotica.Models
 {
-    public class Device
+    public class DeviceModel
     {
-        public Device()
+        public DeviceModel()
         {
             DeviceProperties = DeviceCategory switch
             {
