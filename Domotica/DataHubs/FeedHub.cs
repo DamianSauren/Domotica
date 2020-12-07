@@ -10,17 +10,10 @@ namespace Domotica.DataHubs
     public class FeedHub : Hub
     {
         private readonly IArduinoState arduinoState;
-        private readonly ISampleWriter sampleWriter;
 
-        public FeedHub(IArduinoState arduinoState, ISampleWriter sampleWriter)
+        public FeedHub(IArduinoState arduinoState)
         {
             this.arduinoState = arduinoState;
-            this.sampleWriter = sampleWriter;
-        }
-
-        public void ResetCount()
-        {
-            sampleWriter.StartNewFile();
         }
     }
 }
