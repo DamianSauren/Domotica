@@ -8,7 +8,12 @@ namespace Domotica.Sampling
     public interface IArduinoState
     {
         float Temperature { get; }
+        bool IsTriggered { get; }
+        string HexColor { get; }
+        uint TimeOfTrigger { get; }
 
-        void UpdateArduinoState(float temperature);
+        void UpdateTempState(float temperature);
+        void UpdateMotionState(bool isTriggered, uint timeOfTrigger);
+        void UpdateColorState(string hexColor);
     }
 }
