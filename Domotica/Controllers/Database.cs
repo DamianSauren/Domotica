@@ -1,19 +1,62 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using Domotica.Data;
 using Domotica.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domotica.Controllers
 {
     public class Database
     {
-        public List<DeviceModel> GetDevices()
+
+        private readonly DomoticaContext _context;
+
+        public Database(DomoticaContext context)
         {
-            var devices = new List<DeviceModel>
+            _context = context;
+        }
+
+        /// <summary>
+        /// This method returns a list of type <c>DeviceModel</c> from the database
+        /// </summary>
+        /// <param name="userId">Id of the logged in user</param>
+        /// <returns>List of type <c>DeviceModel</c></returns>
+        public List<DeviceModel> GetDevices(string userId)
+        {
+            var deviceList = _context.Device
+                .Where(s => s.UserId == userId)
+                .ToList();
+
+            var devices = new List<DeviceModel>();
+
+            foreach (var deviceListItem in deviceList)
             {
-                new DeviceModel {DeviceId = "id1", DeviceName = "name1", DeviceCategory = DeviceCategory.Light},
-                new DeviceModel {DeviceId = "id2", DeviceName = "name2", DeviceCategory = DeviceCategory.Dht},
-                new DeviceModel {DeviceId = "id3", DeviceName = "name3", DeviceCategory = DeviceCategory.MotionSensor}
-            };
+                var deviceCategory = deviceListItem.DeviceCategory switch
+                {
+                    "dht" => DeviceCategory.Dht,
+                    "motion-sensor" => DeviceCategory.MotionSensor,
+                    "light" => DeviceCategory.Light,
+                    _ => throw new System.NotImplementedException()
+                };
+
+                object deviceProperties = deviceCategory switch
+                {
+                    DeviceCategory.Dht => new DeviceModel.Dht(),
+                    DeviceCategory.MotionSensor => new DeviceModel.MotionSensor(),
+                    DeviceCategory.Light => new DeviceModel.Light(),
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+
+                devices.Add(new DeviceModel()
+                {
+                    DeviceId = deviceListItem.Id,
+                    DeviceName = deviceListItem.DeviceName,
+                    DeviceCategory = deviceCategory,
+                    DeviceProperties = deviceProperties
+                });
+            }
 
             return devices;
         }

@@ -5,26 +5,39 @@
 
 <h1>Dashboard</h1>
 
+@{
+    List<DeviceModel> devices = ViewBag.Devices;
 
-@foreach (DeviceModel device in ViewBag.Devices)
-{
-    <p>
-        @device.DeviceId
-        @device.DeviceName
-        @switch (device.DeviceCategory) {
-            case DeviceCategory.Dht:
-                <div>Temp</div>
-                break;
-            case DeviceCategory.MotionSensor:
-                <div>Motion</div>
-                break;
-            case DeviceCategory.Light:
-                <div>Light</div>
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
+    if (devices.Count > 0)
+    {
+        foreach (DeviceModel device in devices)
+        {
+            <p>
+                @device.DeviceId
+                @device.DeviceName
+                @switch (device.DeviceCategory) {
+                    case DeviceCategory.Dht:
+                        <div>Temp</div>
+                        break;
+                    case DeviceCategory.MotionSensor:
+                        <div>Motion</div>
+                        break;
+                    case DeviceCategory.Light:
+                        <div>Light</div>
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            </p>
         }
-    </p>
+    }
+    else
+    {
+        <p>
+            No devices found.
+        </p>
+    }
 }
+
 
 

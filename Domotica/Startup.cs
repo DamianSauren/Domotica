@@ -5,8 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
+using Domotica.Data;
 using Domotica.DataHubs;
 using Domotica.Sampling;
+using Microsoft.EntityFrameworkCore;
 
 namespace Domotica
 {
@@ -27,6 +29,11 @@ namespace Domotica
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSignalR();
+
+            services.AddDbContext<DomoticaContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DomoticaContextConnection"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
