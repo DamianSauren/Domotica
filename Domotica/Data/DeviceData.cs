@@ -5,10 +5,14 @@ using System.Threading.Tasks;
 
 namespace Domotica.Data
 {
+    /// <summary>
+    /// This class holds the data of the devices connected to the account
+    /// This class uses a Singleton pattern
+    /// </summary>
     public sealed class DeviceData
     {
-        private static DeviceData instance = null;
-        private static readonly object padlock = new object();
+        private static DeviceData _instance = null;
+        private static readonly object Padlock = new object();
 
         private DeviceData() { }
 
@@ -16,14 +20,14 @@ namespace Domotica.Data
         {
             get
             {
-                lock (padlock)
+                lock (Padlock)
                 {
-                    if (instance == null)
+                    if (_instance == null)
                     {
-                        instance = new DeviceData();
+                        _instance = new DeviceData();
                     }
 
-                    return instance;
+                    return _instance;
                 }
             }
         }
