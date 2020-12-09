@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
+using Domotica.Controllers;
+using Domotica.Models;
 
 namespace Domotica.Data
 {
@@ -30,6 +31,32 @@ namespace Domotica.Data
                     return _instance;
                 }
             }
+        }
+
+        public DomoticaContext Context { get; private set; }
+        public string UserId { get; private set; }  
+
+        /// <summary>
+        /// This method is required to setup values needed in the DeviceData class
+        /// </summary>
+        /// <param name="context">DomoticaContext</param>
+        /// <param name="userId">Id of logged in user</param>
+        public void Setup(DomoticaContext context, string userId)
+        {
+            Context = context;
+            UserId = userId;
+
+            GetDeviceList();
+        }
+
+        public List<DeviceModel> DeviceList { get; private set; }
+
+        /// <summary>
+        /// Get the device list from the database and store it in the property DeviceList
+        /// </summary>
+        private void GetDeviceList()
+        {
+            DeviceList = new Database(Context).GetDevices(UserId);
         }
     }
 }

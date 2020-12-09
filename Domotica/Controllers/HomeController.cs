@@ -28,8 +28,9 @@ namespace Domotica.Controllers
         [Authorize]
         public IActionResult Dashboard()
         {
-            ViewBag.Devices = new Database(_context).GetDevices(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            DeviceData.Instance.Setup(_context, User.FindFirstValue(ClaimTypes.NameIdentifier));
 
+            ViewBag.Devices = DeviceData.Instance.DeviceList;
             return View();
         }
 
