@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domotica.Data
 {
+    //Author: Damian Sauren
     public class Device
     {
         [Key]

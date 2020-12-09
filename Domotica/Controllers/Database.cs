@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Domotica.Controllers
 {
+    //Author: Damian Sauren
     public class Database
     {
 

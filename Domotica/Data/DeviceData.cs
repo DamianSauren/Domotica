@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Domotica.Controllers;
 using Domotica.Models;
+using Domotica.Sampling;
 
 namespace Domotica.Data
 {
+    //Author: Damian Sauren
+
     /// <summary>
     /// This class holds the data of the devices connected to the account
     /// This class uses a Singleton pattern
     /// </summary>
-    public sealed class DeviceData
+    public sealed class DeviceData: IArduinoUpdates
     {
         private static DeviceData _instance = null;
         private static readonly object Padlock = new object();
@@ -57,6 +60,21 @@ namespace Domotica.Data
         private void GetDeviceList()
         {
             DeviceList = new Database(Context).GetDevices(UserId);
+        }
+
+        public void UpdateTempState(string tempId, float temperature)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateMotionState(string motionId, bool isTriggered, uint timeOfTrigger)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateLightState(string lightId, string hexColor, bool isOn)
+        {
+            throw new NotImplementedException();
         }
     }
 }
