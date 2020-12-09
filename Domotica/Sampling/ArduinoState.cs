@@ -11,6 +11,7 @@ namespace Domotica.Sampling
         public bool IsTriggered { get; private set; }
         public string HexColor { get; private set; }
         public uint TimeOfTrigger { get; private set; }
+        public bool IsOn { get; private set; }
         public void UpdateTempState(float temperature)
         {
             Temperature = temperature;
@@ -22,8 +23,9 @@ namespace Domotica.Sampling
             TimeOfTrigger = timeOfTrigger;
         }
 
-        public void UpdateColorState(string hexColor)
+        public void UpdateLightState(string hexColor, bool isOn)
         {
+            IsOn = isOn;
             HexColor = hexColor;
         }
     }

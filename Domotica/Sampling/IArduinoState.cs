@@ -11,9 +11,11 @@ namespace Domotica.Sampling
         bool IsTriggered { get; }
         string HexColor { get; }
         uint TimeOfTrigger { get; }
+        bool IsOn { get; }
 
         void UpdateTempState(float temperature);
         void UpdateMotionState(bool isTriggered, uint timeOfTrigger);
         void UpdateColorState(string hexColor);
+        void UpdateLightState(string hexColor, bool isOn);
     }
 }

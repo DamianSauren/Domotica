@@ -18,7 +18,7 @@ namespace Domotica.Controllers
             this.feedHub = feedHub;
         }
 
-        [HttpPost("TempSens")]
+        [HttpPost("TempSens")] // Should receive JSON obj:
         public async Task<ActionResult> ProvideReading(float temperature)
         {
             arduinoState.UpdateTempState(temperature);
@@ -29,7 +29,7 @@ namespace Domotica.Controllers
             return StatusCode(200);
         }
 
-        [HttpPost("MotionSens")]
+        [HttpPost("MotionSens")] // Should receive JSON obj: 
         public async Task<ActionResult> ProvideReading(bool isTriggered, uint timeOfTrigger)
         {
             arduinoState.UpdateMotionState(isTriggered, timeOfTrigger);
@@ -41,10 +41,22 @@ namespace Domotica.Controllers
             return StatusCode(200);
         }
 
+        [HttpPost("ReceiveLight")] // Should receive JSON obj: Color code, bool on/off
+        public async Task<ActionResult> ProvideReading(string hexColor, bool isOn)
+        {
+            arduinoState.UpdateLightState(hexColor, isOn);
+            await Task.WhenAll(
+                feedHub.Clients.All.SendAsync("newLightData", arduinoState.HexColor,
+                                              arduinoState.IsOn)
+            );
+
+            return StatusCode(200);
+        }
+
         [AcceptVerbs(new[] { "GET", "HEAD" })] //temporary get for light http request
         public ActionResult GetLight()
         {
-            // Should receive JSON obj: Color code, bool on/off
+            
             // Should return JSON obj: (new) Color code, updated bool on/off
             return View();
         }
