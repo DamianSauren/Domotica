@@ -1,5 +1,6 @@
 ﻿using System;
 
+//Author: Owen de Bree
 namespace Domotica.Models
 {
     public class DeviceModel

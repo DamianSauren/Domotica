@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domotica.Sampling;
 
+//Author: Owen de Bree
 namespace Domotica.DataHubs
 {
     public class FeedHub : Hub

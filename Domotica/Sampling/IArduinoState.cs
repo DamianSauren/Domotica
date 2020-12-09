@@ -4,21 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domotica.Models;
 
+//Author: Owen de Bree
 namespace Domotica.Sampling
 {
     public interface IArduinoState
     {
-        public string TempId { get; }
-        public string MotionId { get; }
-        public string LightId { get; }
-        float Temperature { get; }
-        bool IsTriggered { get; }
-        string HexColor { get; }
-        uint TimeOfTrigger { get; }
-        bool IsOn { get; }
-
-        void UpdateTempState(string tempId, float temperature);
-        void UpdateMotionState(string motionId, bool isTriggered, uint timeOfTrigger);
-        void UpdateLightState(string lightId, string hexColor, bool isOn);
+        public string TempId { get; set; }
+        public string MotionId { get; set; }
+        public string LightId { get; set; }
+        float Temperature { get; set; }
+        bool IsTriggered { get; set; }
+        string HexColor { get; set; }
+        uint TimeOfTrigger { get; set; }
+        bool IsOn { get; set; }
     }
 }

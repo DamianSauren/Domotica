@@ -4,12 +4,14 @@ using Domotica.DataHubs;
 using Microsoft.AspNetCore.SignalR;
 using Domotica.Sampling;
 
+//Author: Owen de Bree
 namespace Domotica.Controllers
 {
     [Route("api/[controller]")] //localhost:5000/api/Datacontroller/TempSens_ID
     public class DataController : Controller
     {
         private readonly IArduinoState arduinoState;
+        private readonly IArduinoUpdates arduinoUpdates;
         private readonly IHubContext<FeedHub> feedHub;
 
         public DataController (IArduinoState arduinoState, IHubContext<FeedHub> feedHub)
@@ -21,9 +23,10 @@ namespace Domotica.Controllers
         [HttpPost("TempSens")] // Should receive JSON obj:
         public async Task<ActionResult> ProvideReading(float temperature, string tempId)
         {
-            arduinoState.UpdateTempState(tempId, temperature);
+            arduinoUpdates.UpdateTempState(tempId, temperature);
             await Task.WhenAll(
-                feedHub.Clients.All.SendAsync("newTemperatureData", arduinoState.Temperature)
+                feedHub.Clients.All.SendAsync("newTemperatureData", arduinoState.Temperature,
+                                              arduinoState.TempId)
             );
 
             return StatusCode(200);
@@ -32,10 +35,11 @@ namespace Domotica.Controllers
         [HttpPost("MotionSens")] // Should receive JSON obj: 
         public async Task<ActionResult> ProvideReading(bool isTriggered, uint timeOfTrigger, string motionId)
         {
-            arduinoState.UpdateMotionState(motionId, isTriggered, timeOfTrigger);
+            arduinoUpdates.UpdateMotionState(motionId, isTriggered, timeOfTrigger);
             await Task.WhenAll(
                 feedHub.Clients.All.SendAsync("newMotionData", arduinoState.IsTriggered,
-                                              arduinoState.TimeOfTrigger)
+                                              arduinoState.TimeOfTrigger,
+                                              arduinoState.MotionId)
             );
 
             return StatusCode(200);
@@ -44,10 +48,11 @@ namespace Domotica.Controllers
         [HttpPost("ReceiveLight")] // Should receive JSON obj: Color code, bool on/off
         public async Task<ActionResult> ProvideReading(string hexColor, bool isOn, string lightId)
         {
-            arduinoState.UpdateLightState(lightId, hexColor, isOn);
+            arduinoUpdates.UpdateLightState(lightId, hexColor, isOn);
             await Task.WhenAll(
                 feedHub.Clients.All.SendAsync("newLightData", arduinoState.HexColor,
-                                              arduinoState.IsOn)
+                                              arduinoState.IsOn,
+                                              arduinoState.LightId)
             );
 
             return StatusCode(200);
