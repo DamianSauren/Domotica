@@ -38,7 +38,9 @@ namespace Domotica.Models
 
         public class Light
         {
-
+            //Author: Damian Sauren
+            public string HexColor { get; set; }
+            public bool IsOn { get; set; }
         }
     }
 }
