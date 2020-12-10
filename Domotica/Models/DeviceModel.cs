@@ -23,11 +23,16 @@ namespace Domotica.Models
         
         public class Dht
         {
+            //Author: Damian Sauren
 
+            public float Temperature { get; set; }
         }
 
         public class MotionSensor
         {
+            //Author: Damian Sauren
+            public bool IsTriggered { get; set; }
+            public uint TimeOfTrigger { get; set; }
 
         }
 
