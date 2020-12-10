@@ -34,6 +34,20 @@ namespace Domotica.Controllers
             return View();
         }
 
+        [Authorize]
+        public IActionResult AddDevice()
+        {
+            return View();
+        }
+
+        public IActionResult AddNewDevice(DeviceModel device)
+        {
+            //Add new device to database
+            new Database(_context).AddDevice(User.FindFirstValue(ClaimTypes.NameIdentifier), device);
+
+            return Redirect("/Home/Dashboard");
+        }
+
         public IActionResult AboutUs()
         {
             return View();

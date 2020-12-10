@@ -11,12 +11,43 @@ namespace Domotica.Controllers
     //Author: Damian Sauren
     public class Database
     {
-
         private readonly DomoticaContext _context;
+
+        private const string Dht = "dth";
+        private const string MotionSensor = "motion-sensor";
+        private const string Light = "light";
 
         public Database(DomoticaContext context)
         {
             _context = context;
+        }
+
+        /// <summary>
+        /// Add a new device to the database
+        /// </summary>
+        /// <param name="userId">Id of the user to which the device will be added</param>
+        /// <param name="deviceModel">DeviceModel containing all the device data</param>
+        public void AddDevice(string userId, DeviceModel deviceModel)
+        {
+            var deviceCategory = deviceModel.DeviceCategory switch
+            {
+                DeviceCategory.Dht => Dht,
+                DeviceCategory.MotionSensor => MotionSensor,
+                DeviceCategory.Light => Light,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
+            var device = new Device()
+            {
+                Id = deviceModel.DeviceId,
+                DeviceName = deviceModel.DeviceName,
+                DeviceCategory = deviceCategory,
+                UserId = userId
+                
+            };
+
+            _context.Device.Add(device);
+            _context.SaveChanges();
         }
 
         /// <summary>
@@ -36,10 +67,9 @@ namespace Domotica.Controllers
             {
                 var deviceCategory = deviceListItem.DeviceCategory switch
                 {
-                    "dht" => DeviceCategory.Dht,
-                    "motion-sensor" => DeviceCategory.MotionSensor,
-                    "light" => DeviceCategory.Light,
-                    _ => throw new System.NotImplementedException()
+                    Dht => DeviceCategory.Dht,
+                    MotionSensor => DeviceCategory.MotionSensor,
+                    Light => DeviceCategory.Light
                 };
 
                 object deviceProperties = deviceCategory switch

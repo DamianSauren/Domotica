@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 //Author: Owen de Bree
 namespace Domotica.Models
@@ -16,8 +17,11 @@ namespace Domotica.Models
             };
         }
 
+        [Required]
         public string DeviceId { get; set; }
+        [Required]
         public string DeviceName { get; set; }
+        [Required]
         public DeviceCategory DeviceCategory { get; set; }
         public object DeviceProperties { get; set; }
         
