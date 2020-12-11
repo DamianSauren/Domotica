@@ -7,7 +7,7 @@ using Domotica.Sampling;
 //Author: Owen de Bree
 namespace Domotica.Controllers
 {
-    [Route("api/[controller]")] //localhost:5000/api/Datacontroller/TempSens_ID
+    
     public class DataController : Controller
     {
         private readonly IArduinoState arduinoState;
@@ -20,8 +20,8 @@ namespace Domotica.Controllers
             this.feedHub = feedHub;
         }
 
-        [HttpPost("TempSens")] // Should receive JSON obj:
-        public async Task<ActionResult> ProvideReading(float temperature, string tempId)
+        [HttpPost] // Should receive JSON obj:
+        public async Task<ActionResult> TempSens(float temperature, string tempId)
         {
             arduinoUpdates.UpdateTempState(tempId, temperature);
             await Task.WhenAll(
@@ -32,8 +32,8 @@ namespace Domotica.Controllers
             return StatusCode(200);
         }
 
-        [HttpPost("MotionSens")] // Should receive JSON obj: 
-        public async Task<ActionResult> ProvideReading(bool isTriggered, uint timeOfTrigger, string motionId)
+        [HttpPost] // Should receive JSON obj: 
+        public async Task<ActionResult> MotionSens(bool isTriggered, uint timeOfTrigger, string motionId)
         {
             arduinoUpdates.UpdateMotionState(motionId, isTriggered, timeOfTrigger);
             await Task.WhenAll(
@@ -45,8 +45,8 @@ namespace Domotica.Controllers
             return StatusCode(200);
         }
 
-        [HttpPost("ReceiveLight")] // Should receive JSON obj: Color code, bool on/off
-        public async Task<ActionResult> ProvideReading(string hexColor, bool isOn, string lightId)
+        [HttpPost] // Should receive JSON obj: Color code, bool on/off
+        public async Task<ActionResult> ReceiveLight(string hexColor, bool isOn, string lightId)
         {
             arduinoUpdates.UpdateLightState(lightId, hexColor, isOn);
             await Task.WhenAll(

@@ -22,7 +22,6 @@ namespace Domotica
             return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://localhost:5000", $"http://{Environment.MachineName}:5000/");
                     webBuilder.UseStartup<Startup>();
 
                     if (!isDevelopment)
