@@ -14,7 +14,7 @@ namespace Domotica.Data
     /// </summary>
     public sealed class DeviceData : IArduinoUpdates
     {
-        private static DeviceData _instance = null;
+        private static DeviceData _instance;
         private static readonly object Padlock = new object();
 
         private DeviceData()
