@@ -2,32 +2,36 @@
 using System.Threading.Tasks;
 using Domotica.DataHubs;
 using Microsoft.AspNetCore.SignalR;
-using Domotica.Sampling;
+using Domotica.Interfaces;
 
 //Author: Owen de Bree
 namespace Domotica.Controllers
 {
     
-    public class DataController : Controller
+    public class DataController : Controller, IHubContext<FeedHub>, IDeviceUpdate
     {
-        private readonly IArduinoState arduinoState;
-        private readonly IArduinoUpdates arduinoUpdates;
-        private readonly IHubContext<FeedHub> feedHub;
+        public string HexColor { get; set; }
+        public bool IsOn { get; set; }
 
-        public DataController (IArduinoState arduinoState, IHubContext<FeedHub> feedHub)
+        private readonly IHubContext<FeedHub> feedHub = new DataController();
+        private readonly IDeviceUpdate deviceUpdates = new DataController();
+
+        public IHubClients Clients => feedHub.Clients;
+        public IGroupManager Groups => feedHub.Groups;
+
+        /*public DataController (IArduinoState arduinoState, IHubContext<FeedHub> feedHub)
         {
             this.arduinoState = arduinoState;
             this.feedHub = feedHub;
-        }
+        }*/
 
         [HttpPost]
         [ActionName("TempSens")]
         public async Task<ActionResult> TempSensPost(float temperature, string tempId)
         {
-            arduinoUpdates.UpdateTempState(tempId, temperature);
+            deviceUpdates.UpdateTempState(tempId, temperature);
             await Task.WhenAll(
-                feedHub.Clients.All.SendAsync("newTemperatureData", arduinoState.Temperature,
-                                              arduinoState.TempId)
+                feedHub.Clients.All.SendAsync("newTemperatureData", temperature, tempId)
             );
 
             return StatusCode(200);
@@ -37,11 +41,9 @@ namespace Domotica.Controllers
         [ActionName("MotionSens")]
         public async Task<ActionResult> MotionSensPost(bool isTriggered, uint timeOfTrigger, string motionId)
         {
-            arduinoUpdates.UpdateMotionState(motionId, isTriggered, timeOfTrigger);
+            deviceUpdates.UpdateMotionState(motionId, isTriggered, timeOfTrigger);
             await Task.WhenAll(
-                feedHub.Clients.All.SendAsync("newMotionData", arduinoState.IsTriggered,
-                                              arduinoState.TimeOfTrigger,
-                                              arduinoState.MotionId)
+                feedHub.Clients.All.SendAsync("newMotionData", isTriggered, timeOfTrigger, motionId)
             );
 
             return StatusCode(200);
@@ -51,11 +53,13 @@ namespace Domotica.Controllers
         [ActionName("ReceiveLight")]
         public async Task<ActionResult> ReceiveLightPost(string hexColor, bool isOn, string lightId)
         {
-            arduinoUpdates.UpdateLightState(lightId, hexColor, isOn);
+            deviceUpdates.UpdateLightState(lightId, hexColor, isOn);
+
+            HexColor = hexColor;
+            IsOn = isOn;
+
             await Task.WhenAll(
-                feedHub.Clients.All.SendAsync("newLightData", arduinoState.HexColor,
-                                              arduinoState.IsOn,
-                                              arduinoState.LightId)
+                feedHub.Clients.All.SendAsync("newLightData", hexColor, isOn, lightId)
             );
 
             return StatusCode(200);
@@ -65,7 +69,22 @@ namespace Domotica.Controllers
         [ActionName("GetLight")]
         public ActionResult GetLightRequest()
         {
-            return View(arduinoState.HexColor, arduinoState.IsOn);
+            return View(HexColor, IsOn);
+        }
+
+        public void UpdateTempState(string tempId, float temperature)
+        {
+            deviceUpdates.UpdateTempState(tempId, temperature);
+        }
+
+        public void UpdateMotionState(string motionId, bool isTriggered, uint timeOfTrigger)
+        {
+            deviceUpdates.UpdateMotionState(motionId, isTriggered, timeOfTrigger);
+        }
+
+        public void UpdateLightState(string lightId, string hexColor, bool isOn)
+        {
+            deviceUpdates.UpdateLightState(lightId, hexColor, isOn);
         }
     }
 }
