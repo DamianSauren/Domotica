@@ -20,8 +20,9 @@ namespace Domotica.Controllers
             this.feedHub = feedHub;
         }
 
-        [HttpPost] // Should receive JSON obj:
-        public async Task<ActionResult> TempSens(float temperature, string tempId)
+        [HttpPost]
+        [ActionName("TempSens")]
+        public async Task<ActionResult> TempSensPost(float temperature, string tempId)
         {
             arduinoUpdates.UpdateTempState(tempId, temperature);
             await Task.WhenAll(
@@ -32,8 +33,9 @@ namespace Domotica.Controllers
             return StatusCode(200);
         }
 
-        [HttpPost] // Should receive JSON obj: 
-        public async Task<ActionResult> MotionSens(bool isTriggered, uint timeOfTrigger, string motionId)
+        [HttpPost]
+        [ActionName("MotionSens")]
+        public async Task<ActionResult> MotionSensPost(bool isTriggered, uint timeOfTrigger, string motionId)
         {
             arduinoUpdates.UpdateMotionState(motionId, isTriggered, timeOfTrigger);
             await Task.WhenAll(
@@ -45,8 +47,9 @@ namespace Domotica.Controllers
             return StatusCode(200);
         }
 
-        [HttpPost] // Should receive JSON obj: Color code, bool on/off
-        public async Task<ActionResult> ReceiveLight(string hexColor, bool isOn, string lightId)
+        [HttpPost] // Should receive post: Color code, bool on/off
+        [ActionName("ReceiveLight")]
+        public async Task<ActionResult> ReceiveLightPost(string hexColor, bool isOn, string lightId)
         {
             arduinoUpdates.UpdateLightState(lightId, hexColor, isOn);
             await Task.WhenAll(
@@ -59,7 +62,8 @@ namespace Domotica.Controllers
         }
 
         [AcceptVerbs(new[] { "GET", "HEAD" })] //temporary get for light http request
-        public ActionResult GetLight()
+        [ActionName("GetLight")]
+        public ActionResult GetLightRequest()
         {
             return View(arduinoState.HexColor, arduinoState.IsOn);
         }
