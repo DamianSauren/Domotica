@@ -3,13 +3,19 @@ using System.Threading.Tasks;
 using Domotica.DataHubs;
 using Microsoft.AspNetCore.SignalR;
 using Domotica.Interfaces;
+using Microsoft.Extensions.Logging;
 
 //Author: Owen de Bree
 namespace Domotica.Controllers
 {
-    
     public class DataController : Controller, IHubContext<FeedHub>, IDeviceUpdate
     {
+        private readonly ILogger _logger;
+        public AboutModel(ILogger<DataController> logger)
+        {
+            _logger = logger;
+        }
+
         public string HexColor { get; set; }
         public bool IsOn { get; set; }
 
@@ -26,14 +32,14 @@ namespace Domotica.Controllers
         }*/
 
         [HttpPost]
-        [ActionName("TempSens")]
-        public async Task<ActionResult> TempSensPost(float temperature, string tempId)
+        public async Task<ActionResult> TempSens(float temperature, string tempId)
         {
+            _logger.LogInformation(temperature.ToString());
             deviceUpdates.UpdateTempState(tempId, temperature);
             await Task.WhenAll(
                 feedHub.Clients.All.SendAsync("newTemperatureData", temperature, tempId)
             );
-
+            
             return StatusCode(200);
         }
 
@@ -69,7 +75,7 @@ namespace Domotica.Controllers
         [ActionName("GetLight")]
         public ActionResult GetLightRequest()
         {
-            return View(HexColor, IsOn);
+            return StatusCode(200);
         }
 
         public void UpdateTempState(string tempId, float temperature)
