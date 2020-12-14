@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Domotica.Controllers;
 using Domotica.Models;
-using Domotica.Sampling;
 
 namespace Domotica.Data
 {
@@ -12,7 +11,7 @@ namespace Domotica.Data
     /// This class holds the data of the devices connected to the account including the values we get from the Arduinos
     /// This class uses a Singleton pattern
     /// </summary>
-    public sealed class DeviceData : IArduinoUpdates
+    public sealed class DeviceData
     {
         private static DeviceData _instance;
         private static readonly object Padlock = new object();
