@@ -1,16 +1,16 @@
 {
   "dependencies": {
-    "mssql1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/profdomo/databases/Domotica_DB",
-      "type": "mssql.azure",
-      "connectionId": "DomoticaContextConnection",
-      "secretStore": "AzureAppSettings"
-    },
     "secrets1": {
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/Domoticavault",
       "type": "secrets.keyVault",
       "connectionId": "VaultUri",
       "secretStore": "AzureAppSettings"
+    },
+    "mssql1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/profdomo/databases/Domotica_DB",
+      "type": "mssql.azure",
+      "connectionId": "DomoticaContextConnection",
+      "secretStore": "AzureKeyVault"
     }
   }
 }

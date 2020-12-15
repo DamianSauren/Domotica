@@ -1,40 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Domotica.DataHubs;
-using Microsoft.AspNetCore.SignalR;
+﻿using Domotica.DataHubs;
 using Domotica.Interfaces;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using System.Threading.Tasks;
 
 //Author: Owen de Bree
 namespace Domotica.Controllers
 {
-    public class DataController : Controller, IHubContext<FeedHub>, IDeviceUpdate
+    public class DataController : Controller
     {
-        private readonly ILogger _logger;
-        public AboutModel(ILogger<DataController> logger)
+        private IHubContext<FeedHub> feedHub;
+        private IDeviceUpdate deviceUpdates;
+
+        /*public DataController(IDeviceUpdate deviceUpdates, IHubContext<FeedHub> feedHub)
         {
-            _logger = logger;
-        }
+            this.deviceUpdates = deviceUpdates;
+            this.feedHub = feedHub;
+        }*/
 
         public string HexColor { get; set; }
         public bool IsOn { get; set; }
 
-        private readonly IHubContext<FeedHub> feedHub = new DataController();
-        private readonly IDeviceUpdate deviceUpdates = new DataController();
-
-        public IHubClients Clients => feedHub.Clients;
-        public IGroupManager Groups => feedHub.Groups;
-
-        /*public DataController (IArduinoState arduinoState, IHubContext<FeedHub> feedHub)
-        {
-            this.arduinoState = arduinoState;
-            this.feedHub = feedHub;
-        }*/
-
         [HttpPost]
         public async Task<ActionResult> TempSens(float temperature, string tempId)
         {
-            _logger.LogInformation(temperature.ToString());
+            System.Diagnostics.Debug.WriteLine("temp:" + temperature.ToString());
             deviceUpdates.UpdateTempState(tempId, temperature);
             await Task.WhenAll(
                 feedHub.Clients.All.SendAsync("newTemperatureData", temperature, tempId)
@@ -72,10 +63,11 @@ namespace Domotica.Controllers
         }
 
         [AcceptVerbs(new[] { "GET", "HEAD" })] //temporary get for light http request
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ActionName("GetLight")]
         public ActionResult GetLightRequest()
         {
-            return StatusCode(200);
+            return Ok();
         }
 
         public void UpdateTempState(string tempId, float temperature)

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Domotica.Interfaces
 {
-    interface IDeviceUpdate
+    public interface IDeviceUpdate
     {
         public void UpdateTempState(string tempId, float temperature);
         public void UpdateMotionState(string motionId, bool isTriggered, uint timeOfTrigger);

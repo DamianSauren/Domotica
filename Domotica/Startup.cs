@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Domotica.Data;
 using Domotica.DataHubs;
+using Domotica.Controllers;
+using Domotica.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domotica
