@@ -30,7 +30,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": "true",
-      "applicationUrl": "http://https://domotica20201211151631.azurewebsites.net/"
+      "applicationUrl": "http://localhost:5000/"
     }
   }
 }

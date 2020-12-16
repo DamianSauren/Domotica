@@ -11,6 +11,12 @@
       "type": "mssql.azure",
       "connectionId": "DomoticaContextConnection",
       "secretStore": "AzureAppSettings"
+    },
+    "signalr1": {
+      "type": "signalr",
+      "connectionId": "",
+      "suggestion": "true",
+      "ignored": "true"
     }
   }
 }
