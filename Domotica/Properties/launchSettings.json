@@ -16,14 +16,18 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://domoticavault.vault.azure.net/",
+        "AZURE_USERNAME": "461496@student.fontys.nl"
       }
     },
     "Domotica": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "VaultUri": "https://domoticavault.vault.azure.net/",
+        "AZURE_USERNAME": "461496@student.fontys.nl"
       },
       "dotnetRunMessages": "true",
       "applicationUrl": "http://domotica20201211151631.azurewebsites.net"

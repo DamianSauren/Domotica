@@ -10,7 +10,7 @@ namespace Domotica.Controllers
 {
     public class DataController : Controller
     {
-        private IHubContext<FeedHub> feedHub;
+        private readonly IHubContext<FeedHub> feedHub;
 
         public DataController(IHubContext<FeedHub> feedHub)
         {
