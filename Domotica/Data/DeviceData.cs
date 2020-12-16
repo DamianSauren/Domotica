@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Domotica.Controllers;
 using Domotica.Models;
 
@@ -39,8 +38,8 @@ namespace Domotica.Data
         public DomoticaContext Context { get; private set; }
         public string UserId { get; private set; }
         public List<DeviceModel> DeviceList { get; private set; }
-        private bool IsSetupDone { get; set; } = false;
 
+        private bool _isDone;
         /// <summary>
         /// This method is required to setup values needed in the DeviceData class
         /// </summary>
@@ -51,9 +50,9 @@ namespace Domotica.Data
             Context = context;
             UserId = userId;
 
-            if (IsSetupDone) return;
+            if (_isDone) return;
             GetDeviceList();
-            IsSetupDone = true;
+            _isDone = true;
         }
 
         /// <summary>
@@ -71,6 +70,8 @@ namespace Domotica.Data
         /// <param name="temperature">Temperature value</param>
         public void UpdateTempState(string tempId, float temperature)
         {
+            if (DeviceList == null) return;
+
             foreach (var device in DeviceList)
             {
                 if (device.DeviceId == tempId)
@@ -90,6 +91,8 @@ namespace Domotica.Data
         /// <param name="timeOfTrigger">Time the sensor is triggered</param>
         public void UpdateMotionState(string motionId, bool isTriggered, uint timeOfTrigger)
         {
+            if (DeviceList == null) return;
+
             foreach (var device in DeviceList)
             {
                 if (device.DeviceId == motionId)
@@ -110,6 +113,8 @@ namespace Domotica.Data
         /// <param name="isOn">Is the light on</param>
         public void UpdateLightState(string lightId, string hexColor, bool isOn)
         {
+            if (DeviceList == null) return;
+
             foreach (var device in DeviceList)
             {
                 if (device.DeviceId == lightId)
