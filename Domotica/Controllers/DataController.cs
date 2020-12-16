@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using Domotica.Data;
+using Microsoft.Extensions.Logging;
 
 //Author: Owen de Bree
 namespace Domotica.Controllers
@@ -11,10 +12,12 @@ namespace Domotica.Controllers
     public class DataController : Controller
     {
         private readonly IHubContext<FeedHub> feedHub;
+        private readonly ILogger _logger;
 
-        public DataController(IHubContext<FeedHub> feedHub)
+        public DataController(IHubContext<FeedHub> feedHub, ILogger<DataController> logger)
         {
             this.feedHub = feedHub;
+            _logger = logger;
         }
 
         public string HexColor { get; set; }
@@ -24,7 +27,7 @@ namespace Domotica.Controllers
         public async Task<ActionResult> TempSens(string tempId, float temperature)
         {
             DeviceData.Instance.UpdateTempState(tempId, temperature);
-            System.Diagnostics.Debug.WriteLine("temp:" + temperature.ToString());
+            _logger.LogInformation("temp:" + temperature.ToString());
             await Task.WhenAll(
                 feedHub.Clients.All.SendAsync("newTemperatureData", tempId, temperature)
             );

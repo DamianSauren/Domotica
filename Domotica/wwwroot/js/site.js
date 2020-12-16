@@ -1,4 +1,6 @@
-﻿var connection = new signalR.HubConnectionBuilder().withUrl("/feed").build();
+﻿"use strict";
+
+var connection = new signalR.HubConnectionBuilder().withUrl("/feed").build();
 
 window.onload = function () {
     connection.start().then(function () {
@@ -9,7 +11,7 @@ window.onload = function () {
 };
 
 connection.on("newTemperatureData", function (tempId, temperature) {
-    document.getElementById(`${tempId}-temperature`).innerHTML = temperature;
+    document.getElementById(`${tempId}-temperature`).innerHTML = temperature + " C";
 });
 
 connection.on("newMotionData", function (motionId, isTriggered, timeOfTrigger) {
