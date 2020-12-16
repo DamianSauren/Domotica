@@ -84,6 +84,12 @@ namespace Domotica.Areas.Identity.Pages.Account
                 //Get the username by email required for login
                 var user = await _userManager.FindByEmailAsync(Input.Email);
 
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "User does not exist.");
+                    return Page();
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);

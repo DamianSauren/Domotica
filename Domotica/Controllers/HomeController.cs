@@ -44,6 +44,7 @@ namespace Domotica.Controllers
         {
             //Add new device to database
             new Database(_context).AddDevice(User.FindFirstValue(ClaimTypes.NameIdentifier), device);
+            DeviceData.Instance.AddNewDevice(device);
 
             return Redirect("/Home/Dashboard");
         }

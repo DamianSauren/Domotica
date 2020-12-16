@@ -38,6 +38,8 @@ namespace Domotica.Data
 
         public DomoticaContext Context { get; private set; }
         public string UserId { get; private set; }
+        public List<DeviceModel> DeviceList { get; private set; }
+        private bool IsSetupDone { get; set; } = false;
 
         /// <summary>
         /// This method is required to setup values needed in the DeviceData class
@@ -49,10 +51,10 @@ namespace Domotica.Data
             Context = context;
             UserId = userId;
 
+            if (IsSetupDone) return;
             GetDeviceList();
+            IsSetupDone = true;
         }
-
-        public List<DeviceModel> DeviceList { get; private set; }
 
         /// <summary>
         /// Get the device list from the database and store it in the property DeviceList
@@ -118,6 +120,11 @@ namespace Domotica.Data
                     break; //Break the loop because the device is updated
                 }
             }
+        }
+
+        public void AddNewDevice(DeviceModel device)
+        {
+            DeviceList.Add(device);
         }
     }
 }
