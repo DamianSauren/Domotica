@@ -29,7 +29,11 @@
                                 break;
                             case DeviceCategory.Light:
                                 <div id="@device.DeviceId-hexColor">#FF0000</div>
-                                <div id="@device.DeviceId-isOnr">Turned On</div>
+                                <div id="@device.DeviceId-isOn">Turned On</div>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="@device.DeviceId-switch">
+                                </div>
+                                <button id="@device.DeviceId-button">Button</button>
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
