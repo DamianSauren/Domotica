@@ -1,6 +1,6 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/feed").build();
+const connection = new signalR.HubConnectionBuilder().withUrl("/feed").build();
 
 window.onload = function () {
     connection.start().then(function () {
@@ -11,23 +11,23 @@ window.onload = function () {
 };
 
 connection.on("newTemperatureData", function (tempId, temperature) {
-    document.getElementById(`${tempId}-temperature`).innerHTML = temperature + " C";
+    document.getElementById(`${tempId}-temperature`).innerText = temperature + " C";
 });
 
 connection.on("newMotionData", function (motionId, isTriggered, timeOfTrigger) {
-    document.getElementById(`${motionId}-isTriggered`).innerHTML = isTriggered;
-    document.getElementById(`${motionId}-timeOfTrigger`).innerHTML = timeOfTrigger;
+    document.getElementById(`${motionId}-isTriggered`).innerText = isTriggered;
+    document.getElementById(`${motionId}-timeOfTrigger`).innerText = timeOfTrigger;
 });
 
 connection.on("newLightData", function (lightId, hexColor, isOn) {
-    document.getElementById(`${lightId}-hexColor`).innerHTML = hexColor;
-    document.getElementById(`${lightId}-isOn`).innerHTML = isOn;
+    document.getElementById(`${lightId}-hexColor`).innerText = hexColor;
+    document.getElementById(`${lightId}-isOn`).innerText = isOn;
 
-    var toggleSwitch = document.getElementById(`${lightID}-switch`);
+    const toggleSwitch = document.getElementById(`${lightID}-switch`);
 
     toggleSwitch.addEventListener('change', function () {
-        var checkbox = document.querySelector('input[type="checkbox"]');
-        var sendColor = document.getElementById(`${lightID}-button`)
+        const checkbox = document.querySelector('input[type="checkbox"]');
+        const sendColor = document.getElementById(`${lightID}-button`)
 
         sendColor.addEventListener("click", function () {
             connection.send("ChangeColor", lightID, hexColor)
