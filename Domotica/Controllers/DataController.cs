@@ -48,8 +48,6 @@ namespace Domotica.Controllers
         [ActionName("ReceiveLight")]
         public async Task<ActionResult> ReceiveLightPost(string lightId, string hexColor, bool isOn)
         {
-            HexColor = hexColor;
-            IsOn = isOn;
             DeviceData.Instance.UpdateLightState(lightId, hexColor, isOn);
             await Task.WhenAll(
                 feedHub.Clients.All.SendAsync("newLightData", lightId, hexColor, isOn)
@@ -58,10 +56,22 @@ namespace Domotica.Controllers
             return StatusCode(200);
         }
 
+        public void UpdateLightState(string lightId, bool lightState)
+        {
+            IsOn = lightState;
+            DeviceData.Instance.UpdateLightState(lightId, HexColor, IsOn);
+        }
+
+        public void UpdateColorState(string lightId, string hexColor)
+        {
+            HexColor = hexColor;
+            DeviceData.Instance.UpdateLightState(lightId, HexColor, IsOn);
+        }
+
         [AcceptVerbs(new[] { "GET", "HEAD" })] //temporary get for light http request
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ActionName("GetLight")]
-        public ActionResult GetLightRequest()
+        public ActionResult GetLightRequest(string lightId)
         {
             return Ok();
         }
