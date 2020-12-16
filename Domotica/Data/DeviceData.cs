@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Domotica.Controllers;
 using Domotica.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Domotica.Data
 {
@@ -40,12 +41,14 @@ namespace Domotica.Data
         public List<DeviceModel> DeviceList { get; private set; }
 
         private bool _isDone;
+
+        private ILogger<HomeController> _logger;
         /// <summary>
         /// This method is required to setup values needed in the DeviceData class
         /// </summary>
         /// <param name="context">DomoticaContext</param>
         /// <param name="userId">Id of logged in user</param>
-        public void Setup(DomoticaContext context, string userId)
+        public void Setup(DomoticaContext context, string userId, ILogger<HomeController> logger)
         {
             Context = context;
             UserId = userId;
@@ -53,6 +56,7 @@ namespace Domotica.Data
             if (_isDone) return;
             GetDeviceList();
             _isDone = true;
+            _logger = logger;
         }
 
         /// <summary>
@@ -130,6 +134,8 @@ namespace Domotica.Data
         public void AddNewDevice(DeviceModel device)
         {
             DeviceList.Add(device);
+            
+            _logger.LogInformation(device.ToString());
         }
     }
 }

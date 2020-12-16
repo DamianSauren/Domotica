@@ -46,5 +46,10 @@ namespace Domotica.Models
             public string HexColor { get; set; }
             public bool IsOn { get; set; }
         }
+
+        public override string ToString()
+        {
+            return "DeviceId: " + DeviceId + " DeviceName: " + DeviceName + " DeviceCategory: " + DeviceCategory;
+        }
     }
 }
