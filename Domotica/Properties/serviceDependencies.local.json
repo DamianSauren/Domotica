@@ -3,12 +3,6 @@
     "secrets1": {
       "type": "secrets.user"
     },
-    "secrets2": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.KeyVault/vaults/Domoticavault",
-      "type": "secrets.keyVault",
-      "connectionId": "VaultUri",
-      "secretStore": null
-    },
     "mssql1": {
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/profdomo/databases/Domotica_DB",
       "type": "mssql.azure",
