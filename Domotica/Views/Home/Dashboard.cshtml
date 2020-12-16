@@ -6,39 +6,46 @@
 
 <h1>Dashboard</h1>
 
-@{
-    List<DeviceModel> devices = ViewBag.Devices;
+<div class="container">
+    <div class="row">
+        @{
+            List<DeviceModel> devices = ViewBag.Devices;
 
-    if (devices.Count > 0)
-    {
-        foreach (DeviceModel device in devices)
-        {
-            <p>
-                @device.DeviceId
-                @device.DeviceName
-                @switch (device.DeviceCategory) {
-                    case DeviceCategory.Dht:
-                        <div>Temp</div>
-                        break;
-                    case DeviceCategory.MotionSensor:
-                        <div>Motion</div>
-                        break;
-                    case DeviceCategory.Light:
-                        <div>Light</div>
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+            if (devices.Count > 0)
+            {
+                foreach (DeviceModel device in devices)
+                {
+                    <div class="col">
+                        @device.DeviceId
+                        @device.DeviceName
+                        @switch (device.DeviceCategory)
+                        {
+                            case DeviceCategory.Dht:
+                                <div id="@device.DeviceId-temperature">17.5 C</div>
+                                break;
+                            case DeviceCategory.MotionSensor:
+                                <div id="@device.DeviceId-isTriggered">triggered</div>
+                                <div id="@device.DeviceId-timeOfTrigger">11:10 16-12-2020</div>
+                                break;
+                            case DeviceCategory.Light:
+                                <div id="@device.DeviceId-hexColor">#FF0000</div>
+                                <div id="@device.DeviceId-isOnr">Turned On</div>
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    </div>
                 }
-            </p>
+            }
+            else
+            {
+                <p>
+                    No devices found.
+                </p>
+            }
         }
-    }
-    else
-    {
-        <p>
-            No devices found.
-        </p>
-    }
-}
+    </div>
+</div>
 
 <div>
     <a asp-action="AddDevice">Add a new device</a>
