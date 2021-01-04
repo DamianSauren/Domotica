@@ -69,7 +69,7 @@ namespace Domotica.Controllers
             return StatusCode(200);
         }
 
-        public void UpdateLightState(string lightId, bool lightState)
+        public static void UpdateLightState(string lightId, bool lightState)
         {
             var light = new DeviceModel.Light
             {
@@ -80,7 +80,7 @@ namespace Domotica.Controllers
             DeviceData.Instance.UpdateData(lightId, light);
         }
 
-        public void UpdateColorState(string lightId, string hexColor)
+        public static void UpdateColorState(string lightId, string hexColor)
         {
             var light = new DeviceModel.Light
             {

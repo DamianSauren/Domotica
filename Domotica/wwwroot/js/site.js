@@ -1,5 +1,4 @@
 ﻿"use strict";
-
 const connection = new signalR.HubConnectionBuilder().withUrl("/feed").build();
 
 window.onload = function () {
@@ -21,18 +20,23 @@ connection.on("newMotionData", function (motionId, isTriggered, timeOfTrigger) {
 });
 
 connection.on("newLightData", function (lightId, hexColor, isOn) {
-    document.getElementById(`${lightId}-hexColor`).innerText = hexColor;
     document.getElementById(`${lightId}-isOn`).innerText = isOn;
+
+    const colorPicker = document.getElementById(`${lightId}-color`);
+
+    colorPicker.value = hexColor;
+    colorPicker.addEventListener("change", updateColor, false);
+
+    function updateColor(event) {
+        console.log(event.target.value);
+        connection.send("ChangeColor", lightId, event.target.value);
+    };
 
     const toggleSwitch = document.getElementById(`${lightId}-switch`);
 
     toggleSwitch.addEventListener('change', function () {
         const checkbox = document.querySelector('input[type="checkbox"]');
-        const sendColor = document.getElementById(`${lightId}-button`)
-
-        sendColor.addEventListener("click", function () {
-            connection.send("ChangeColor", lightId, hexColor)
-        });
+        const sendColor = document.getElementById(`${lightId}-button`);
 
         checkbox.addEventListener('change', function () {
             if (checkbox.checked) {
