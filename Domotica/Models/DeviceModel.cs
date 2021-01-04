@@ -39,7 +39,7 @@ namespace Domotica.Models
         {
             //Author: Damian Sauren
             public bool IsTriggered { get; set; }
-            public uint TimeOfTrigger { get; set; }
+            public string TimeOfTrigger { get; set; }
 
         }
 

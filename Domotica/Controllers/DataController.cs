@@ -42,7 +42,7 @@ namespace Domotica.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> MotionSens(string motionId, bool isTriggered, uint timeOfTrigger)
+        public async Task<ActionResult> MotionSens(string motionId, bool isTriggered, string timeOfTrigger)
         {
             DeviceData.Instance.UpdateData(motionId, isTriggered, timeOfTrigger);
             await Task.WhenAll(
@@ -98,6 +98,7 @@ namespace Domotica.Controllers
         {
             var Color = DeviceData.Instance.GetLight(lightId).HexColor;
             var isOn = DeviceData.Instance.GetLight(lightId).IsOn;
+
             return Ok(Color + "||"+ isOn);
         }
     }

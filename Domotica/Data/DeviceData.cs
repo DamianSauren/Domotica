@@ -106,7 +106,7 @@ namespace Domotica.Data
         /// <param name="motionId">Id of motion sensor</param>
         /// <param name="isTriggered">Is the sensor triggered</param>
         /// <param name="timeOfTrigger">Time the sensor is triggered</param>
-        public void UpdateData(string motionId, bool isTriggered, uint timeOfTrigger)
+        public void UpdateData(string motionId, bool isTriggered, string timeOfTrigger)
         {
             if (DeviceList == null) return;
 
