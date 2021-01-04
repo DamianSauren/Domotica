@@ -42,8 +42,7 @@ namespace Domotica.Controllers
         }
 
         [HttpPost]
-        [ActionName("MotionSens")]
-        public async Task<ActionResult> MotionSensPost(string motionId, bool isTriggered, uint timeOfTrigger)
+        public async Task<ActionResult> MotionSens(string motionId, bool isTriggered, uint timeOfTrigger)
         {
             DeviceData.Instance.UpdateData(motionId, isTriggered, timeOfTrigger);
             await Task.WhenAll(
@@ -53,9 +52,8 @@ namespace Domotica.Controllers
             return StatusCode(200);
         }
 
-        [HttpPost] // Should receive post: Color code, bool on/off
-        [ActionName("ReceiveLight")]
-        public async Task<ActionResult> ReceiveLightPost(string lightId, string hexColor, bool isOn)
+        [HttpPost]
+        public async Task<ActionResult> ReceiveLight(string lightId, string hexColor, bool isOn)
         {
             var light = new DeviceModel.Light
             {
