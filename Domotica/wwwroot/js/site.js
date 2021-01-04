@@ -24,21 +24,21 @@ connection.on("newLightData", function (lightId, hexColor, isOn) {
     document.getElementById(`${lightId}-hexColor`).innerText = hexColor;
     document.getElementById(`${lightId}-isOn`).innerText = isOn;
 
-    const toggleSwitch = document.getElementById(`${lightID}-switch`);
+    const toggleSwitch = document.getElementById(`${lightId}-switch`);
 
     toggleSwitch.addEventListener('change', function () {
         const checkbox = document.querySelector('input[type="checkbox"]');
-        const sendColor = document.getElementById(`${lightID}-button`)
+        const sendColor = document.getElementById(`${lightId}-button`)
 
         sendColor.addEventListener("click", function () {
-            connection.send("ChangeColor", lightID, hexColor)
+            connection.send("ChangeColor", lightId, hexColor)
         });
 
         checkbox.addEventListener('change', function () {
             if (checkbox.checked) {
-                connection.send("TurnOn", lightID);
+                connection.send("TurnOn", lightId);
             } else {
-                connection.send("TurnOff", lightID);
+                connection.send("TurnOff", lightId);
             }
         });
     });
