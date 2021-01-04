@@ -12,7 +12,7 @@ window.onload = function () {
 
 connection.on("newTemperatureData", function (tempId, temperature) {
     console.log("received newTemperatureData");
-    document.getElementById(`${tempId}-temperature`).innerText = temperature + " C";    
+    document.getElementById(`${tempId}-temperature`).innerText = temperature;    
 });
 
 connection.on("newMotionData", function (motionId, isTriggered, timeOfTrigger) {

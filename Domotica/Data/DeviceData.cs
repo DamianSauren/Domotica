@@ -67,12 +67,25 @@ namespace Domotica.Data
             DeviceList = new Database(Context).GetDevices(UserId);
         }
 
+        public DeviceModel.Light GetLight(string id)
+        {
+            foreach(DeviceModel device in DeviceList)
+            {
+                if (device.DeviceId == id)
+                {
+                    return device.DeviceProperties as DeviceModel.Light;
+                }
+            }
+            return new DeviceModel.Light();
+            
+        }
+
         /// <summary>
         /// Update the device temperature properties
         /// </summary>
         /// <param name="tempId">Id of thermostat device</param>
         /// <param name="temperature">Temperature value</param>
-        public void UpdateTempState(string tempId, string temperature)
+        public void UpdateData(string tempId, string temperature)
         {
             if (DeviceList == null) return;
 
@@ -80,7 +93,7 @@ namespace Domotica.Data
             {
                 if (device.DeviceId == tempId)
                 {
-                    ((DeviceModel.Dht) device.DeviceProperties).Temperature = temperature;
+                    ((DeviceModel.TempSensor) device.DeviceProperties).Temperature = temperature;
 
                     break; //Break the loop because the device is updated
                 }
@@ -93,7 +106,7 @@ namespace Domotica.Data
         /// <param name="motionId">Id of motion sensor</param>
         /// <param name="isTriggered">Is the sensor triggered</param>
         /// <param name="timeOfTrigger">Time the sensor is triggered</param>
-        public void UpdateMotionState(string motionId, bool isTriggered, uint timeOfTrigger)
+        public void UpdateData(string motionId, bool isTriggered, uint timeOfTrigger)
         {
             if (DeviceList == null) return;
 
@@ -113,9 +126,8 @@ namespace Domotica.Data
         /// Update the light properties
         /// </summary>
         /// <param name="lightId">Id of the light</param>
-        /// <param name="hexColor">Color value of the light</param>
-        /// <param name="isOn">Is the light on</param>
-        public void UpdateLightState(string lightId, string hexColor, bool isOn)
+        /// <param name="light">Values of the light</param>
+        public void UpdateData(string lightId, DeviceModel.Light light )
         {
             if (DeviceList == null) return;
 
@@ -123,8 +135,8 @@ namespace Domotica.Data
             {
                 if (device.DeviceId == lightId)
                 {
-                    ((DeviceModel.Light)device.DeviceProperties).HexColor = hexColor;
-                    ((DeviceModel.Light)device.DeviceProperties).IsOn = isOn;
+                    ((DeviceModel.Light)device.DeviceProperties).HexColor = light.HexColor;
+                    ((DeviceModel.Light)device.DeviceProperties).IsOn = light.IsOn;
 
                     break; //Break the loop because the device is updated
                 }

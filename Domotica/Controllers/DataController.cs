@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using Domotica.Data;
+using Domotica.Models;
 using Microsoft.Extensions.Logging;
 
 //Author: Owen de Bree
@@ -26,8 +27,13 @@ namespace Domotica.Controllers
         [HttpPost]
         public async Task<ActionResult> TempSens(string tempId, string temperature)
         {
-            DeviceData.Instance.UpdateTempState(tempId, temperature);
-            _logger.LogInformation("temp:" + temperature.ToString());
+            var temp = new DeviceModel.TempSensor
+            {
+                Temperature = temperature
+            };
+
+            DeviceData.Instance.UpdateData(tempId, temp.ToString());
+            _logger.LogInformation("temp:" + temperature);
             await Task.WhenAll(
                 feedHub.Clients.All.SendAsync("newTemperatureData", tempId, temperature)
             );
@@ -39,7 +45,7 @@ namespace Domotica.Controllers
         [ActionName("MotionSens")]
         public async Task<ActionResult> MotionSensPost(string motionId, bool isTriggered, uint timeOfTrigger)
         {
-            DeviceData.Instance.UpdateMotionState(motionId, isTriggered, timeOfTrigger);
+            DeviceData.Instance.UpdateData(motionId, isTriggered, timeOfTrigger);
             await Task.WhenAll(
                 feedHub.Clients.All.SendAsync("newMotionData", motionId, isTriggered, timeOfTrigger)
             );
@@ -51,7 +57,13 @@ namespace Domotica.Controllers
         [ActionName("ReceiveLight")]
         public async Task<ActionResult> ReceiveLightPost(string lightId, string hexColor, bool isOn)
         {
-            DeviceData.Instance.UpdateLightState(lightId, hexColor, isOn);
+            var light = new DeviceModel.Light
+            {
+                HexColor = hexColor,
+                IsOn = isOn
+            };
+
+            DeviceData.Instance.UpdateData(lightId, light);
             await Task.WhenAll(
                 feedHub.Clients.All.SendAsync("newLightData", lightId, hexColor, isOn)
             );
@@ -61,22 +73,34 @@ namespace Domotica.Controllers
 
         public void UpdateLightState(string lightId, bool lightState)
         {
-            IsOn = lightState;
-            DeviceData.Instance.UpdateLightState(lightId, HexColor, IsOn);
+            var light = new DeviceModel.Light
+            {
+                HexColor = DeviceData.Instance.GetLight(lightId).HexColor,
+                IsOn = lightState
+            };
+
+            DeviceData.Instance.UpdateData(lightId, light);
         }
 
         public void UpdateColorState(string lightId, string hexColor)
         {
-            HexColor = hexColor;
-            DeviceData.Instance.UpdateLightState(lightId, HexColor, IsOn);
+            var light = new DeviceModel.Light
+            {
+                HexColor = hexColor,
+                IsOn = DeviceData.Instance.GetLight(lightId).IsOn
+            };
+
+            DeviceData.Instance.UpdateData(lightId, light);
         }
 
         [AcceptVerbs(new[] { "GET", "HEAD" })] //temporary get for light http request
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ActionName("GetLight")]
-        public ActionResult GetLightRequest(string lightId)
+        public ActionResult RequestLight(string lightId)
         {
-            return Ok();
+            var Color = DeviceData.Instance.GetLight(lightId).HexColor;
+            var isOn = DeviceData.Instance.GetLight(lightId).IsOn;
+            return Ok(Color + "||"+ isOn);
         }
     }
 }

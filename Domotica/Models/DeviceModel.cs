@@ -10,7 +10,7 @@ namespace Domotica.Models
         {
             DeviceProperties = DeviceCategory switch
             {
-                DeviceCategory.Dht => (object) new Dht(),
+                DeviceCategory.Dht => (object) new TempSensor(),
                 DeviceCategory.MotionSensor => new MotionSensor(),
                 DeviceCategory.Light => new Light(),
                 _ => throw new ArgumentOutOfRangeException(nameof(DeviceCategory), DeviceCategory, null)
@@ -25,10 +25,13 @@ namespace Domotica.Models
         public DeviceCategory DeviceCategory { get; set; }
         public object DeviceProperties { get; set; }
         
-        public class Dht
+        public class TempSensor
         {
-            //Author: Damian Sauren
-
+            //Author: Owen de Bree
+            public override string ToString()
+            {
+                return Temperature + " C°";
+            }
             public string Temperature { get; set; }
         }
 

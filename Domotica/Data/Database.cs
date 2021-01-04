@@ -59,7 +59,7 @@ namespace Domotica.Controllers
             {
                 object deviceProperties = GetDeviceCategory(deviceListItem.DeviceCategory) switch
                 {
-                    DeviceCategory.Dht => new DeviceModel.Dht(),
+                    DeviceCategory.Dht => new DeviceModel.TempSensor(),
                     DeviceCategory.MotionSensor => new DeviceModel.MotionSensor(),
                     DeviceCategory.Light => new DeviceModel.Light(),
                     _ => throw new ArgumentOutOfRangeException()
