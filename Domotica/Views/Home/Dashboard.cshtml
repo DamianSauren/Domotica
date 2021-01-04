@@ -29,9 +29,13 @@
                                 break;
                             case DeviceCategory.Light:
                                 <div id="@device.DeviceId-hexColor">#FF0000</div>
+
+                                <input type="color" id="@device.DeviceId-color" value="#e66465"/>
+
                                 <div id="@device.DeviceId-isOn">Turned On</div>
                                 <div class="custom-control custom-switch">
                                     <input type="checkbox" class="custom-control-input" id="@device.DeviceId-switch">
+                                    <label class="custom-control-label" for="@device.DeviceId-switch">Turn light on/off</label>
                                 </div>
                                 <button id="@device.DeviceId-button">Button</button>
                                 break;
