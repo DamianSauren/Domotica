@@ -11,7 +11,8 @@ window.onload = function () {
 };
 
 connection.on("newTemperatureData", function (tempId, temperature) {
-    document.getElementById(`${tempId}-temperature`).innerText = temperature + " C";
+    console.log("received newTemperatureData");
+    document.getElementById(`${tempId}-temperature`).innerText = temperature + " C";    
 });
 
 connection.on("newMotionData", function (motionId, isTriggered, timeOfTrigger) {

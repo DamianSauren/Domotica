@@ -29,7 +29,7 @@ namespace Domotica.Models
         {
             //Author: Damian Sauren
 
-            public float Temperature { get; set; }
+            public string Temperature { get; set; }
         }
 
         public class MotionSensor

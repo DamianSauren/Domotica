@@ -24,7 +24,7 @@ namespace Domotica.Controllers
         public bool IsOn { get; set; }
 
         [HttpPost]
-        public async Task<ActionResult> TempSens(string tempId, float temperature)
+        public async Task<ActionResult> TempSens(string tempId, string temperature)
         {
             DeviceData.Instance.UpdateTempState(tempId, temperature);
             _logger.LogInformation("temp:" + temperature.ToString());

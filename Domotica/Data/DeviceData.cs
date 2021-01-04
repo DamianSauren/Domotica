@@ -72,7 +72,7 @@ namespace Domotica.Data
         /// </summary>
         /// <param name="tempId">Id of thermostat device</param>
         /// <param name="temperature">Temperature value</param>
-        public void UpdateTempState(string tempId, float temperature)
+        public void UpdateTempState(string tempId, string temperature)
         {
             if (DeviceList == null) return;
 
