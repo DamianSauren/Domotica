@@ -30,7 +30,8 @@ namespace Domotica.Models
             //Author: Owen de Bree
             public override string ToString()
             {
-                return Temperature + " C°";
+                string completeTemp = Temperature + " C°";
+                return completeTemp;
             }
             public string Temperature { get; set; }
         }

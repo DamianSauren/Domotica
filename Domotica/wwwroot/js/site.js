@@ -10,7 +10,6 @@ window.onload = function () {
 };
 
 connection.on("newTemperatureData", function (tempId, temperature) {
-    console.log("received newTemperatureData");
     document.getElementById(`${tempId}-temperature`).innerText = temperature;    
 });
 
@@ -29,7 +28,6 @@ connection.on("newLightData", function (lightId, hexColor, isOn) {
     toggleSwitch.checked = isOn;
 
     function updateColor(event) {
-        console.log(event.target.value);
         connection.send(`ChangeColor`, lightId, event.target.value);
     };
 

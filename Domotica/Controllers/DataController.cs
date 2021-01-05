@@ -32,10 +32,12 @@ namespace Domotica.Controllers
                 Temperature = temperature
             };
 
-            DeviceData.Instance.UpdateData(tempId, temp.ToString());
-            _logger.LogInformation("temp:" + temperature);
+            var finalTemp = temp.ToString();
+
+            DeviceData.Instance.UpdateData(tempId, finalTemp);
+            _logger.LogInformation("temp:" + finalTemp);
             await Task.WhenAll(
-                feedHub.Clients.All.SendAsync("newTemperatureData", tempId, temperature)
+                feedHub.Clients.All.SendAsync("newTemperatureData", tempId, finalTemp)
             );
             
             return StatusCode(200);
