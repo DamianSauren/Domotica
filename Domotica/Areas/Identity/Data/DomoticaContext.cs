@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Domotica.Areas.Identity.Data;
-using Microsoft.AspNetCore.Identity;
+﻿using Domotica.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +6,7 @@ namespace Domotica.Data
 {
     public class DomoticaContext : IdentityDbContext<DomoticaUser>
     {
+        public DbSet<Device> Device { get; set; }
         public DomoticaContext(DbContextOptions<DomoticaContext> options)
             : base(options)
         {
