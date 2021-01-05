@@ -59,7 +59,7 @@ namespace Domotica.Controllers
             {
                 object deviceProperties = GetDeviceCategory(deviceListItem.DeviceCategory) switch
                 {
-                    DeviceCategory.Dht => new DeviceModel.TempSensor(),
+                    DeviceCategory.TempSensor => new DeviceModel.TempSensor(),
                     DeviceCategory.MotionSensor => new DeviceModel.MotionSensor(),
                     DeviceCategory.Light => new DeviceModel.Light(),
                     _ => throw new ArgumentOutOfRangeException()
@@ -86,7 +86,7 @@ namespace Domotica.Controllers
         {
             return category switch
             {
-                DeviceCategory.Dht => Dht,
+                DeviceCategory.TempSensor => Dht,
                 DeviceCategory.MotionSensor => MotionSensor,
                 DeviceCategory.Light => Light,
                 _ => throw new ArgumentOutOfRangeException(nameof(category), category, null)
@@ -102,7 +102,7 @@ namespace Domotica.Controllers
         {
             return category switch
             {
-                Dht => DeviceCategory.Dht,
+                Dht => DeviceCategory.TempSensor,
                 MotionSensor => DeviceCategory.MotionSensor,
                 Light => DeviceCategory.Light,
                 _ => throw new ArgumentOutOfRangeException(nameof(category), category, null)

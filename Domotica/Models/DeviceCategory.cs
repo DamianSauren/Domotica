@@ -8,7 +8,7 @@ namespace Domotica.Models
 {
     public enum DeviceCategory
     {
-        Dht,
+        TempSensor,
         MotionSensor,
         Light
     }
