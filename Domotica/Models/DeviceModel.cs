@@ -8,7 +8,7 @@ namespace Domotica.Models
     {
         public DeviceModel()
         {
-            //AuthorL Damian Sauren
+            //Author: Damian Sauren
             DeviceProperties = DeviceCategory switch
             {
                 DeviceCategory.TempSensor => (object) new TempSensor(),
@@ -54,7 +54,6 @@ namespace Domotica.Models
 
         public override string ToString()
         {
-            //Author: Damian Sauren
             return "DeviceId: " + DeviceId + " DeviceName: " + DeviceName + " DeviceCategory: " + DeviceCategory;
         }
     }
