@@ -2,6 +2,10 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 /* Provide sufficient contrast against white background */
+
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+
 a {
     color: #0366d6;
 }
@@ -19,8 +23,23 @@ a {
     background-color: #075981;
     border-color: #1861ac;
     transition: .4s;
+
 }
 
+.bg-color {
+    background-color: #075981;
+    color: #075981;
+}
+
+.nav-item {
+    font-family: 'Nunito', sans-serif;
+    color: #ffffff;
+    background-color: #fff;
+}
+
+.nav-text-color {
+    color: #fff;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
