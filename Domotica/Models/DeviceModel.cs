@@ -20,6 +20,10 @@ namespace Domotica.Models
 
         [Required]
         public string DeviceId { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
+
         [Required]
         public string DeviceName { get; set; }
         [Required]

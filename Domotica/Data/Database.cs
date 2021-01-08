@@ -68,6 +68,7 @@ namespace Domotica.Controllers
                 devices.Add(new DeviceModel()
                 {
                     DeviceId = deviceListItem.Id,
+                    UserId = deviceListItem.UserId,
                     DeviceName = deviceListItem.DeviceName,
                     DeviceCategory = GetDeviceCategory(deviceListItem.DeviceCategory),
                     DeviceProperties = deviceProperties

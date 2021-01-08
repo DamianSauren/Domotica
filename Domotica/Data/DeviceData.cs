@@ -37,8 +37,7 @@ namespace Domotica.Data
         }
 
         public DomoticaContext Context { get; private set; }
-        public string UserId { get; private set; }
-        public List<DeviceModel> DeviceList { get; private set; }
+        public List<DeviceModel> DeviceList = new List<DeviceModel>();
 
         private bool _isDone;
 
@@ -51,20 +50,56 @@ namespace Domotica.Data
         public void Setup(DomoticaContext context, string userId, ILogger<HomeController> logger)
         {
             Context = context;
-            UserId = userId;
-
             if (_isDone) return;
-            GetDeviceList();
             _isDone = true;
             _logger = logger;
         }
 
         /// <summary>
-        /// Get the device list from the database and store it in the property DeviceList
+        /// Get the devices for user
         /// </summary>
-        private void GetDeviceList()
+        /// <param name="userId">Id of logged in user</param>
+        /// <returns>List of devices of type DeviceModel</returns>
+        public List<DeviceModel> GetDeviceList(string userId)
         {
-            DeviceList = new Database(Context).GetDevices(UserId);
+            List<DeviceModel> userList = new List<DeviceModel>();
+
+            foreach(DeviceModel device in DeviceList)
+            {
+                if(device.UserId == userId)
+                {
+                    userList.Add(device);
+                    _logger.LogInformation(device.ToString());
+                }
+            }
+
+            return userList;
+        }
+
+        /// <summary>
+        /// Update the existing device list with new devices that are not yet in current list
+        /// </summary>
+        /// <param name="userId">Id of logged in user</param>
+        public void UpDateDeviceList(string userId)
+        {
+            List<DeviceModel> devices = new Database(Context).GetDevices(userId);
+
+            if (DeviceList.Count == 0 || DeviceList == null)
+            {
+                //Add whole list if DeviceList is empty
+                DeviceList.AddRange(devices);
+            }
+
+            foreach(DeviceModel device in devices)
+            {
+               // _logger.LogInformation(device.ToString());
+
+                if (!DeviceList.Contains(device))
+                {
+                    //Device is not yet in list so add it
+                    DeviceList.Add(device);
+                }
+            }
         }
 
         public DeviceModel.Light GetLight(string id)
