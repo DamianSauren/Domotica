@@ -92,13 +92,25 @@ namespace Domotica.Data
 
             foreach(DeviceModel device in devices)
             {
-               // _logger.LogInformation(device.ToString());
+                // _logger.LogInformation(device.ToString());
 
-                if (!DeviceList.Contains(device))
+                bool found = false;
+
+                foreach(DeviceModel deviceListItem in DeviceList)
                 {
-                    //Device is not yet in list so add it
-                    DeviceList.Add(device);
+                    if(deviceListItem.DeviceId == device.DeviceId)
+                    {
+                        found = true;
+                        break;
+                    }
                 }
+
+                //If the device is found, don't add and continue to next cycle
+                if (found) continue;
+
+                //Device is not yet in list so add it
+                _logger.LogInformation("Add new device in UpdateDeviceList " + device.ToString());                
+                DeviceList.Add(device);
             }
         }
 

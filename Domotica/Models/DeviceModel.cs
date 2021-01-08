@@ -58,7 +58,7 @@ namespace Domotica.Models
 
         public override string ToString()
         {
-            return "DeviceId: " + DeviceId + " DeviceName: " + DeviceName + " DeviceCategory: " + DeviceCategory;
+            return "DeviceId: " + DeviceId + "UserId:" + UserId +  " DeviceName: " + DeviceName + " DeviceCategory: " + DeviceCategory;
         }
     }
 }
