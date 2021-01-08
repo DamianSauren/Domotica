@@ -1,19 +1,27 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Domotica.Sampling;
+using Domotica.Controllers;
+using Microsoft.Extensions.Logging;
 
+//Author: Owen de Bree
 namespace Domotica.DataHubs
 {
     public class FeedHub : Hub
     {
-        private readonly IArduinoState arduinoState;
-
-        public FeedHub(IArduinoState arduinoState)
+        public void TurnOn(string lightId)
         {
-            this.arduinoState = arduinoState;
+            bool state = true;
+            DataController.UpdateLightState(lightId, state);
+        }
+
+        public void TurnOff(string lightId)
+        {
+            bool state = false;
+            DataController.UpdateLightState(lightId, state);
+        }
+
+        public void ChangeColor(string lightId, string hexColor)
+        {
+            DataController.UpdateColorState(lightId, hexColor);
         }
     }
 }

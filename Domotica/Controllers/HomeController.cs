@@ -1,12 +1,10 @@
 ﻿using Domotica.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Domotica.Data;
 
 namespace Domotica.Controllers
 {
@@ -14,9 +12,12 @@ namespace Domotica.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly DomoticaContext _context;
+
+        public HomeController(ILogger<HomeController> logger, DomoticaContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -27,7 +28,25 @@ namespace Domotica.Controllers
         [Authorize]
         public IActionResult Dashboard()
         {
+            DeviceData.Instance.Setup(_context, User.FindFirstValue(ClaimTypes.NameIdentifier), _logger);
+
+            ViewBag.Devices = DeviceData.Instance.DeviceList;
             return View();
+        }
+
+        [Authorize]
+        public IActionResult AddDevice()
+        {
+            return View();
+        }
+
+        public IActionResult AddNewDevice(DeviceModel device)
+        {
+            //Add new device to database
+            new Database(_context).AddDevice(User.FindFirstValue(ClaimTypes.NameIdentifier), device);
+            DeviceData.Instance.AddNewDevice(device);
+
+            return Redirect("/Home/Dashboard");
         }
 
         public IActionResult AboutUs()

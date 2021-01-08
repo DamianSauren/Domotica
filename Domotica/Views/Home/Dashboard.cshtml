@@ -1,7 +1,56 @@
-﻿
-@{
+﻿@{
+    //Author: Damian Sauren
     ViewData["Title"] = "Dashboard";
+    @model DeviceModel
 }
 
 <h1>Dashboard</h1>
 
+<div class="container">
+    <div class="row">
+        @{
+            List<DeviceModel> devices = ViewBag.Devices;
+
+            if (devices.Count > 0)
+            {
+                foreach (DeviceModel device in devices)
+                {
+                    <div class="col">
+                        @device.DeviceId
+                        @device.DeviceName
+                        @switch (device.DeviceCategory)
+                        {
+                            case DeviceCategory.Dht:
+                                <div id="@device.DeviceId-temperature">17.5 C</div>
+                                break;
+                            case DeviceCategory.MotionSensor:
+                                <div id="@device.DeviceId-isTriggered">triggered</div>
+                                <div id="@device.DeviceId-timeOfTrigger">11:10 16-12-2020</div>
+                                break;
+                            case DeviceCategory.Light:
+                                <input type="color" id="@device.DeviceId-color" value="#e66465"/>
+
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="@device.DeviceId-switch">
+                                    <label class="custom-control-label" for="@device.DeviceId-switch">Turn light on/off</label>
+                                </div>
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    </div>
+                }
+            }
+            else
+            {
+                <p>
+                    No devices found.
+                </p>
+            }
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="AddDevice">Add a new device</a>
+</div>
