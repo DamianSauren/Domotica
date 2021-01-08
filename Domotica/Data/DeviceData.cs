@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Domotica.Controllers;
 using Domotica.Models;
 using Microsoft.Extensions.Logging;
@@ -86,6 +87,11 @@ namespace Domotica.Data
 
             if (DeviceList.Count == 0 || DeviceList == null)
             {
+
+            
+                _logger.LogInformation("Device list is empty");
+
+
                 //Add whole list if DeviceList is empty
                 DeviceList.AddRange(devices);
             }
@@ -184,6 +190,7 @@ namespace Domotica.Data
                 {
                     ((DeviceModel.Light)device.DeviceProperties).HexColor = light.HexColor;
                     ((DeviceModel.Light)device.DeviceProperties).IsOn = light.IsOn;
+                    _logger.LogInformation("Is device on? :" + ((DeviceModel.Light)device.DeviceProperties).IsOn.ToString());
 
                     break; //Break the loop because the device is updated
                 }

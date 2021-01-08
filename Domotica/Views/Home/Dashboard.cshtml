@@ -21,23 +21,25 @@
                         @switch (device.DeviceCategory)
                         {
                             case DeviceCategory.TempSensor:
-                                <div id="@device.DeviceId-temperature">17.5 C</div>
+                        <div id="@device.DeviceId-temperature">                                                  
+                            @((device.DeviceProperties as DeviceModel.TempSensor).Temperature)
+                        </div>
                                 break;
                             case DeviceCategory.MotionSensor:
-                                <div id="@device.DeviceId-isTriggered">triggered</div>
-                                <div id="@device.DeviceId-timeOfTrigger">11:10 16-12-2020</div>
+                                <div id="@device.DeviceId-isTriggered">@((device.DeviceProperties as DeviceModel.MotionSensor).IsTriggered)</div>
+                                <div id="@device.DeviceId-timeOfTrigger">@((device.DeviceProperties as DeviceModel.MotionSensor).TimeOfTrigger)</div>
                                 break;
                             case DeviceCategory.Light:
-                                <input type="color" id="@device.DeviceId-color" value="#e66465"/>
+                                <input type="color" id="@device.DeviceId-color" value="@((device.DeviceProperties as DeviceModel.Light).HexColor)"/>
 
                                 <div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input" id="@device.DeviceId-switch">
+                                    <input type="checkbox" class="custom-control-input" id="@device.DeviceId-switch" checked="@((device.DeviceProperties as DeviceModel.Light).IsOn)">
                                     <label class="custom-control-label" for="@device.DeviceId-switch">Turn light on/off</label>
                                 </div>
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException();
-                        }
+                                    }
                     </div>
                 }
             }
