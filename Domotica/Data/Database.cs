@@ -59,9 +59,20 @@ namespace Domotica.Controllers
             {
                 object deviceProperties = GetDeviceCategory(deviceListItem.DeviceCategory) switch
                 {
-                    DeviceCategory.TempSensor => new DeviceModel.TempSensor(),
-                    DeviceCategory.MotionSensor => new DeviceModel.MotionSensor(),
-                    DeviceCategory.Light => new DeviceModel.Light(),
+                    DeviceCategory.TempSensor => new DeviceModel.TempSensor()
+                    {
+                        Temperature = "0.0 C°"
+                    },
+                    DeviceCategory.MotionSensor => new DeviceModel.MotionSensor()
+                    {
+                        IsTriggered = false,
+                        TimeOfTrigger = "00:00:00"
+                    },
+                    DeviceCategory.Light => new DeviceModel.Light()
+                    {
+                        HexColor = "#FFFFFF",
+                        IsOn = false
+                    },
                     _ => throw new ArgumentOutOfRangeException()
                 };
 
