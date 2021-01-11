@@ -198,9 +198,28 @@ namespace Domotica.Data
         }
 
         public void AddNewDevice(DeviceModel device)
-        {
+        {         
+            device.DeviceProperties = device.DeviceCategory switch
+            {
+                DeviceCategory.TempSensor => new DeviceModel.TempSensor()
+                {
+                    Temperature = "0.0 C°"
+                },
+                DeviceCategory.MotionSensor => new DeviceModel.MotionSensor()
+                {
+                    IsTriggered = false,
+                    TimeOfTrigger = "00:00:00"
+                },
+                DeviceCategory.Light => new DeviceModel.Light()
+                {
+                    HexColor = "#FFFFFF",
+                    IsOn = false
+                },
+                _ => throw new System.NotImplementedException(),
+            };
+
             DeviceList.Add(device);
-            
+
             _logger.LogInformation(device.ToString());
         }
     }
