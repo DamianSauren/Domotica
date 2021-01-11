@@ -50,6 +50,9 @@ namespace Domotica.Controllers
 
         public IActionResult AddNewDevice(DeviceModel device)
         {
+            //Add UserId to device
+            device.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             //Add new device to database
             new Database(_context).AddDevice(User.FindFirstValue(ClaimTypes.NameIdentifier), device);
             DeviceData.Instance.AddNewDevice(device);
