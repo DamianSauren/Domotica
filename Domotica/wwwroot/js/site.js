@@ -37,8 +37,10 @@ connection.on("newLightData", function (lightId, hexColor, isOn) {
         checkbox.addEventListener(`change`, function () {
             if (checkbox.checked) {
                 connection.send("TurnOn", lightId);
+                console.log(`${lightId} On`);
             } else {
                 connection.send("TurnOff", lightId);
+                console.log(`${lightId} Off`);
             }
         });
     });

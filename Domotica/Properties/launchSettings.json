@@ -23,6 +23,7 @@
     },
     "Domotica": {
       "commandName": "Project",
+      "launchBrowser": true,
       "environmentVariables": {
         "VaultUri": "https://domoticavault.vault.azure.net/",
         "AZURE_USERNAME": "461496@student.fontys.nl"
