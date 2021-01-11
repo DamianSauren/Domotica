@@ -21,9 +21,6 @@ namespace Domotica.Controllers
             _logger = logger;
         }
 
-        public string HexColor { get; set; }
-        public bool IsOn { get; set; }
-
         [HttpPost]
         public async Task<ActionResult> TempSens(string tempId, string temperature)
         {
