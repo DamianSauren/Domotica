@@ -26,7 +26,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "VaultUri": "https://domoticavault.vault.azure.net/",
-        "AZURE_USERNAME": "461496@student.fontys.nl",
+        "AZURE_USERNAME": "466991@student.fontys.nl",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": "true",

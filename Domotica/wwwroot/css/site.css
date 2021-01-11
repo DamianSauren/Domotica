@@ -19,11 +19,8 @@ a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
     background-color: #075981;
     border-color: #1861ac;
-    transition: .4s;
-
 }
 
 .bg-color {
@@ -33,17 +30,38 @@ a {
 
 .nav-item {
     font-family: 'Nunito', sans-serif;
-    color: #ffffff;
-    background-color: #fff;
+    background-color: #075981 !important;
 }
 
 .nav-text-color {
-    color: #ffffff !important;
+    color: #fff !important;
+    background-color: #075981 !important;
+    margin: 10px;
+    font-size: 18px;
+
+}
+
+.navbar-color {
+    color: white !important;
+    font-size: 20px;
+
+}
+
+.lead2 {
+    height: 40% !important;
+    font-size: 1.5rem !important;
+    color: black !important;
+    line-height: 1.3em !important;
+}
+
+.footer-color {
+    background-color: #075981 !important;
+    color: #075981;
 }
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 16px;
+    font-size: 16px;
 }
 @media (min-width: 768px) {
   html {
