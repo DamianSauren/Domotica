@@ -19,8 +19,6 @@ a {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    background-color: #075981;
-    border-color: #1861ac;
 }
 
 .bg-color {
@@ -30,7 +28,6 @@ a {
 
 .nav-item {
     font-family: 'Nunito', sans-serif;
-    background-color: #075981 !important;
 }
 
 .nav-text-color {
@@ -48,16 +45,28 @@ a {
 }
 
 .lead2 {
-    height: 40% !important;
-    font-size: 1.5rem !important;
-    color: black !important;
-    line-height: 1.3em !important;
+    height: 40%;
+    font-size: 1.5rem;
+    color: black;
+    line-height: 1.3em;
 }
 
 .footer-color {
     background-color: #075981 !important;
-    color: #075981;
+    color: #ffffff !important;
 }
+
+.nav-link {
+    transition: 0.4s !important;
+}
+
+.nav-link:hover {
+    color: #a0b2db !important;
+    cursor: pointer;
+    transition: 0.4s;
+    opacity: 1;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
