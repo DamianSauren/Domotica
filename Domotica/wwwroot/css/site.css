@@ -5,7 +5,7 @@ for details on configuring this project to bundle and minify static web assets. 
 
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap');
 
 body.test2 {
     background: url('https://i.imgur.com/nSUNx6U.png');
@@ -36,6 +36,46 @@ a {
 }
 
 
+.product-card img {
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+    object-fit: cover;
+    border-bottom: grey 1px solid;
+}
+
+.product-card {
+    width: 200px;
+    text-align: center;
+    border: 1px solid black;
+    margin-right: 52px;
+    border-radius: 10px;
+    background-color: white;
+    transition: 0.5s;
+}
+
+.product-card:hover {
+    transform: scale(1.04);
+}
+
+.product-beschrijving {
+    padding: 10px;
+}
+
+.images1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-items: left;
+    margin-top: 30px;
+
+}
+
+.images2 {
+
+
+    
+}
+
 .btn-primary {
     color: #fff;
     background-color: #075981;
@@ -43,9 +83,6 @@ a {
     transition: .4s;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-
-}
 
 .bg-color {
     background-color: #075981;
@@ -102,6 +139,69 @@ a {
     line-height: 1.3em;
     font-family: 'Poppins', sans-serif;
     font-weight: 200px;
+}
+
+.lead3 {
+    height: 40%;
+    width: 100%;
+    margin-top: 29px;
+    font-size: 1.4rem;
+    color: black;
+    line-height: 1.3em;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 200px;
+}
+
+.info-cards .about-us-text-1 {
+    position: absolute;
+    top: 290px;
+    right: 260px;
+    text-align: right;
+}
+
+.info-cards .about-us-text-2 {
+    position: absolute;
+    top: 659px;
+    right: 1410px;
+    text-align: left;
+    font-size: 27.5pt !important;
+}
+
+
+.info-cards .about-us-text-3 {
+    position: absolute;
+    top: 730px;
+    right: 180px;
+    text-align: left;
+    font-size: 27pt !important;
+}
+
+
+.leadtext {
+    font-family: 'Open Sans Condensed';
+    font-size: 29pt;
+    font-weight: 700;
+}
+
+about-us-text-1 {
+    position: relative;
+    left: 20px;
+    top: 10px;
+}
+
+.form-test {
+    margin: 0;
+    padding: 20px;
+}
+
+textarea.form-control {
+    height: 220px;
+}
+
+
+.container-form {
+    width: 50%;
+    height: 50%;
 }
 
 .form-group {
