@@ -28,9 +28,17 @@ namespace Domotica.Controllers
         [Authorize]
         public IActionResult Dashboard()
         {
-            DeviceData.Instance.Setup(_context, User.FindFirstValue(ClaimTypes.NameIdentifier), _logger);
+            //Set userId variable
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            ViewBag.Devices = DeviceData.Instance.DeviceList;
+            //Setup Singleton class
+            DeviceData.Instance.Setup(_context, userId, _logger);
+
+            //Update new values from database
+            DeviceData.Instance.UpDateDeviceList(userId);
+
+            //Set Viewbag values that are used in View
+            ViewBag.Devices = DeviceData.Instance.GetDeviceList(userId);
             return View();
         }
 
@@ -42,6 +50,9 @@ namespace Domotica.Controllers
 
         public IActionResult AddNewDevice(DeviceModel device)
         {
+            //Add UserId to device
+            device.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             //Add new device to database
             new Database(_context).AddDevice(User.FindFirstValue(ClaimTypes.NameIdentifier), device);
             DeviceData.Instance.AddNewDevice(device);

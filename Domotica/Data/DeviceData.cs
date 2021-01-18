@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Domotica.Controllers;
 using Domotica.Models;
 using Microsoft.Extensions.Logging;
@@ -37,8 +38,7 @@ namespace Domotica.Data
         }
 
         public DomoticaContext Context { get; private set; }
-        public string UserId { get; private set; }
-        public List<DeviceModel> DeviceList { get; private set; }
+        public List<DeviceModel> DeviceList = new List<DeviceModel>();
 
         private bool _isDone;
 
@@ -51,20 +51,73 @@ namespace Domotica.Data
         public void Setup(DomoticaContext context, string userId, ILogger<HomeController> logger)
         {
             Context = context;
-            UserId = userId;
-
             if (_isDone) return;
-            GetDeviceList();
             _isDone = true;
             _logger = logger;
         }
 
         /// <summary>
-        /// Get the device list from the database and store it in the property DeviceList
+        /// Get the devices for user
         /// </summary>
-        private void GetDeviceList()
+        /// <param name="userId">Id of logged in user</param>
+        /// <returns>List of devices of type DeviceModel</returns>
+        public List<DeviceModel> GetDeviceList(string userId)
         {
-            DeviceList = new Database(Context).GetDevices(UserId);
+            List<DeviceModel> userList = new List<DeviceModel>();
+
+            foreach(DeviceModel device in DeviceList)
+            {
+                if(device.UserId == userId)
+                {
+                    userList.Add(device);
+                    _logger.LogInformation(device.ToString());
+                }
+            }
+
+            return userList;
+        }
+
+        /// <summary>
+        /// Update the existing device list with new devices that are not yet in current list
+        /// </summary>
+        /// <param name="userId">Id of logged in user</param>
+        public void UpDateDeviceList(string userId)
+        {
+            List<DeviceModel> devices = new Database(Context).GetDevices(userId);
+
+            if (DeviceList.Count == 0 || DeviceList == null)
+            {
+
+            
+                _logger.LogInformation("Device list is empty");
+
+
+                //Add whole list if DeviceList is empty
+                DeviceList.AddRange(devices);
+            }
+
+            foreach(DeviceModel device in devices)
+            {
+                // _logger.LogInformation(device.ToString());
+
+                bool found = false;
+
+                foreach(DeviceModel deviceListItem in DeviceList)
+                {
+                    if(deviceListItem.DeviceId == device.DeviceId)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                //If the device is found, don't add and continue to next cycle
+                if (found) continue;
+
+                //Device is not yet in list so add it
+                _logger.LogInformation("Add new device in UpdateDeviceList " + device.ToString());                
+                DeviceList.Add(device);
+            }
         }
 
         public DeviceModel.Light GetLight(string id)
@@ -137,6 +190,7 @@ namespace Domotica.Data
                 {
                     ((DeviceModel.Light)device.DeviceProperties).HexColor = light.HexColor;
                     ((DeviceModel.Light)device.DeviceProperties).IsOn = light.IsOn;
+                    _logger.LogInformation("Is device on? :" + ((DeviceModel.Light)device.DeviceProperties).IsOn.ToString());
 
                     break; //Break the loop because the device is updated
                 }
@@ -144,9 +198,28 @@ namespace Domotica.Data
         }
 
         public void AddNewDevice(DeviceModel device)
-        {
+        {         
+            device.DeviceProperties = device.DeviceCategory switch
+            {
+                DeviceCategory.TempSensor => new DeviceModel.TempSensor()
+                {
+                    Temperature = "0.0 C°"
+                },
+                DeviceCategory.MotionSensor => new DeviceModel.MotionSensor()
+                {
+                    IsTriggered = false,
+                    TimeOfTrigger = "00:00:00"
+                },
+                DeviceCategory.Light => new DeviceModel.Light()
+                {
+                    HexColor = "#FFFFFF",
+                    IsOn = false
+                },
+                _ => throw new System.NotImplementedException(),
+            };
+
             DeviceList.Add(device);
-            
+
             _logger.LogInformation(device.ToString());
         }
     }

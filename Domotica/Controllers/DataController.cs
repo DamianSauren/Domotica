@@ -21,21 +21,24 @@ namespace Domotica.Controllers
             _logger = logger;
         }
 
-        public string HexColor { get; set; }
-        public bool IsOn { get; set; }
-
         [HttpPost]
         public async Task<ActionResult> TempSens(string tempId, string temperature)
         {
+            if (DeviceData.Instance.DeviceList == null)
+            {
+                return StatusCode(200);
+            }
             var temp = new DeviceModel.TempSensor
             {
                 Temperature = temperature
             };
 
-            DeviceData.Instance.UpdateData(tempId, temp.ToString());
-            _logger.LogInformation("temp:" + temperature);
+            var finalTemp = temp.ToString();
+
+            DeviceData.Instance.UpdateData(tempId, finalTemp);
+            _logger.LogInformation("temp:" + finalTemp);
             await Task.WhenAll(
-                feedHub.Clients.All.SendAsync("newTemperatureData", tempId, temperature)
+                feedHub.Clients.All.SendAsync("newTemperatureData", tempId, finalTemp)
             );
             
             return StatusCode(200);
@@ -44,6 +47,10 @@ namespace Domotica.Controllers
         [HttpPost]
         public async Task<ActionResult> MotionSens(string motionId, bool isTriggered, string timeOfTrigger)
         {
+            if (DeviceData.Instance.DeviceList == null)
+            {
+                return StatusCode(200);
+            }
             DeviceData.Instance.UpdateData(motionId, isTriggered, timeOfTrigger);
             await Task.WhenAll(
                 feedHub.Clients.All.SendAsync("newMotionData", motionId, isTriggered, timeOfTrigger)
@@ -55,6 +62,10 @@ namespace Domotica.Controllers
         [HttpPost]
         public async Task<ActionResult> ReceiveLight(string lightId, string hexColor, bool isOn)
         {
+            if (DeviceData.Instance.DeviceList == null)
+            {
+                return StatusCode(200);
+            }
             var light = new DeviceModel.Light
             {
                 HexColor = hexColor,
@@ -96,6 +107,10 @@ namespace Domotica.Controllers
         [ActionName("GetLight")]
         public ActionResult RequestLight(string lightId)
         {
+            if (DeviceData.Instance.DeviceList == null)
+            {
+                return StatusCode(200);
+            }
             var Color = DeviceData.Instance.GetLight(lightId).HexColor;
             var isOn = DeviceData.Instance.GetLight(lightId).IsOn;
 
