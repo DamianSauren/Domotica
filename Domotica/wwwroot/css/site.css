@@ -35,6 +35,17 @@ a {
     color: #0366d6;
 }
 
+.navbar-brand {
+    position: absolute;
+    margin-left: -204px;
+    margin-top: -5px;
+    transition: 0.4s;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.03);
+
+ }
 
 .product-card img {
     width: 150px;
